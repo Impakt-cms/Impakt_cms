@@ -8,8 +8,7 @@ var express    = require('express');        // call express
 var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var api_routes =  require('./API/api')
-
-
+var path = require('path');
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -22,9 +21,17 @@ var port = process.env.PORT || 8080;        // set our port
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-
+app.use(express.static(path.join(__dirname, '/Views')));
+app.set('view engine', 'html');
 app.use('/api', api_routes);
 
+//Register a catch all for our angular routes to take over
+
+
+app.get('*', function(req,res){
+    res.render('index');
+     res.sendFile(path.join(__dirname+ '/Views/index.html'));
+})
 // START THE SERVER
 // =============================================================================
 app.listen(port);

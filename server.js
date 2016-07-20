@@ -9,6 +9,8 @@ var app        = express();                 // define our app using express
 var bodyParser = require('body-parser');
 var api_routes =  require('./API/api')
 var path = require('path');
+var db = require('./db');
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -29,10 +31,29 @@ app.use('/api', api_routes);
 
 
 app.get('*', function(req,res){
-
      res.sendFile(path.join(__dirname+ '/Views/index.html'));
 })
+
+
+var image = db.model('image');
+
+
+var max = new image();
+
+max.name="max";
+
+console.log(max.name);
+
+
+
+
 // START THE SERVER
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
+
+
+
+
+
+

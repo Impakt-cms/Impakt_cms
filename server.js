@@ -35,14 +35,6 @@ app.get('*', function(req,res){
 })
 
 
-var image = db.model('image');
-
-
-var max = new image();
-
-max.name="max";
-
-console.log(max.name);
 
 
 

@@ -22,14 +22,14 @@ var port = process.env.PORT || 8080;        // set our port
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use(express.static(path.join(__dirname, '/Views')));
-app.set('view engine', 'html');
+
 app.use('/api', api_routes);
 
 //Register a catch all for our angular routes to take over
 
 
 app.get('*', function(req,res){
-    res.render('index');
+
      res.sendFile(path.join(__dirname+ '/Views/index.html'));
 })
 // START THE SERVER

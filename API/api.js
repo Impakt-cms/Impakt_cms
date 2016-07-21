@@ -21,6 +21,7 @@ router.get('/', function(req, res) {
 router.route('/images')
 
 .post(function(req,res){
+
 	var image = new Image();
 	
 	image.name=req.body.name;
@@ -36,6 +37,8 @@ router.route('/images')
 
 })
 .get(function(req,res){
+
+	res.json({ message: 'You landed on the beginnings of a collection' });
 	Image.find(function(err,images){
 
 		if(err){
@@ -49,7 +52,7 @@ router.route('/images')
 
 
 
-//find by ID, singular requests for instance
+//Find by ID, singular requests for instance
 router.route('/images/:id')
 
 .get(function(req,res){

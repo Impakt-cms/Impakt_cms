@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var Image = require('../Models/ImageModel');
-
+var fs = require('fs');
 
 var newImage = new Image({
 	name:'New Image Name'
@@ -15,6 +15,8 @@ router.get('/', function(req, res) {
 //Images will be saved to the server via fs.readsync
 //Image file paths will be saved to the database and iterated over
 //Via the front end (angular)
+
+
 
 
 // Create, List for images collection

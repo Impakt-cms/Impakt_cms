@@ -24,20 +24,15 @@ var port = process.env.PORT || 8080;        // set our port
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
 app.use(express.static(path.join(__dirname, '/Views')));
-
+//Using express.static to fetch different file types.
 app.use('/api', api_routes);
-
-//Register a catch all for our angular routes to take over
-
-
-app.get('*', function(req,res){
-    res.sendFile(path.join(__dirname+ '/Views/index.html'));
-})
-
-
-
-
-
+app.use('/js', express.static(__dirname + '/Public/JS'));
+app.use('/css', express.static(__dirname + '/Public/CSS'));
+app.use('/Controllers', express.static(__dirname + '/Controllers'));
+//Fetching index.html as default if others fall through.
+app.all('/*', function(req, res, next) {
+	res.sendFile('/Views/index.html', { root: __dirname });
+});
 
 // START THE SERVER
 // =============================================================================

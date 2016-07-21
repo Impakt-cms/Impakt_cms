@@ -31,7 +31,7 @@ app.use('/api', api_routes);
 
 
 app.get('*', function(req,res){
-     res.sendFile(path.join(__dirname+ '/Views/index.html'));
+    res.sendFile(path.join(__dirname+ '/Views/index.html'));
 })
 
 

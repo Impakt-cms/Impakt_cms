@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app')
+        .module('scotchApp')
         .config(function ($stateProvider, $urlRouterProvider) {
           
             $urlRouterProvider.otherwise("/");

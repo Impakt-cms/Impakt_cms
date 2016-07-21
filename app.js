@@ -1,5 +1,8 @@
+(function () {
+    'use strict';
+    
 //this is where the home-route will go
-var app = angular.module('scotchApp', ['ui.router']);
+angular.module('scotchApp', ['ui.router', 'ui.boostrap', 'angularMoment']);
 
 	//Routes defined in router.js
 	
@@ -16,3 +19,5 @@ var app = angular.module('scotchApp', ['ui.router']);
     app.controller('contactController', function($scope) {
         $scope.message = 'Contact us! JK. This is just a demo.';
     });
+	
+})();

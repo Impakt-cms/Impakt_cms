@@ -1,4 +1,4 @@
-# Impakt_CMS
+# Impakt CMS
 A Simple CMS for creatives' built and powered by NodeJS
 
 

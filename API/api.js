@@ -1,11 +1,10 @@
 var express = require('express');
 var router = express.Router();
 var Image = require('../Models/ImageModel');
-<<<<<<< HEAD
 var fs = require('fs');
-=======
+
 var dir = './Public/Assets'
->>>>>>> 175d4015a0a8ab2dd75a6e59c168d21c8663ff1e
+
 
 var newImage = new Image({
 	name:'New Image Name'

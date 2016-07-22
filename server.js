@@ -47,7 +47,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // Validator setup.
-app.use(expressValidator({
+app.use(validator({
   errorFormatter: function(param, msg, value) {
       var namespace = param.split('.')
       , root    = namespace.shift()

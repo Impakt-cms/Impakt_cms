@@ -2,12 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Image = require('../Models/ImageModel');
 var fs = require('fs');
-<<<<<<< HEAD
 var dir = './Public/Assets/'
-=======
 
-var dir = './Public/Assets'
->>>>>>> Front_End
 
 
 var newImage = new Image({
@@ -30,7 +26,6 @@ router.get('/', function(req, res) {
 router.route('/images')
 
 .post(function(req,res){
-<<<<<<< HEAD
 	var date_time = new Date();
 	var date_string= new Date().toISOString();
 	var image = new Image();
@@ -39,20 +34,19 @@ router.route('/images')
 	image.file_path=dir+image.name+'.jpg';
 	image.meta.Title=req.body.Title;
 	image.created_at= date_time; 
-=======
+
 	var d = new Date();
 	var image = new Image();
 	
 	image.name=req.body.name;
 	
->>>>>>> Front_End
+
 
 	image.save(function(err){
 		if(err){
 			res.send(err);
 		}
-<<<<<<< HEAD
-=======
+
 		console.log('Success');
 		res.json({message:'Image has been created!'});
 		
@@ -65,11 +59,10 @@ router.route('/images')
 			
 		})
 	})
->>>>>>> Front_End
 
 
 		
-    })
+    
 		//Need to base 64 encode before proceeding.
 		/*fs.readFile(req.files.image.path,function(err,data){
 			if (err) {

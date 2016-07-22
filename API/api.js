@@ -29,31 +29,30 @@ router.route('/images')
 	var d = new Date();
 	var image = new Image();
 	
-	image.name=req.body.name+d;
+	image.name=req.body.name;
 	
-	image.file_path = req.body.file_path;
 
 	image.save(function(err){
 		if(err){
 			res.send(err);
 		}
-		
+		console.log('Success');
 		res.json({message:'Image has been created!'});
 		
-		// Need to base 64 encode before proceeding.
-		/*fs.writeFile(dir,image.name+'.jpg',function(err){
+		//Need to base 64 encode before proceeding.
+		fs.writeFile(dir,image.name+'.jpg',function(err){
 			if(err){
 				res.send(err);
 			}
 			res.json('The file was saved to'+dir);
 			
-		})*/
+		})
 	})
 
 })
 .get(function(req,res){
 
-	res.json({ message: 'You landed on the beginnings of a collection' });
+	
 	Image.find(function(err,images){
 
 		if(err){
@@ -68,7 +67,7 @@ router.route('/images')
 
 
 //Find by ID, singular requests for instance
-router.route('/images/:id')
+router.route('/images/:image_id')
 
 .get(function(req,res){
 	Image.findById(req.params.image_id, function(err, image){
@@ -102,6 +101,7 @@ router.route('/images/:id')
 })
 //so far this only deletes a the file path and not the server file upon delete
 .delete(function(req,res){
+	
 	Image.remove({
 		_id:req.params.image_id
 	}, function(err, image){

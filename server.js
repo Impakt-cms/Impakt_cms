@@ -10,6 +10,15 @@ var bodyParser = require('body-parser');
 var api_routes =  require('./API/api')
 var path = require('path');
 var db = require('./db');
+var timeout = require('connect-timeout'); //express v4
+
+
+app.use(timeout(120000));
+app.use(haltOnTimedout);
+
+function haltOnTimedout(req, res, next){
+  if (!req.timedout) next();
+}
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST

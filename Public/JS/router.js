@@ -5,18 +5,25 @@
         .module('app')
         .config(function ($stateProvider, $urlRouterProvider) {
           
-            $urlRouterProvider.otherwise("/");
+            $urlRouterProvider.otherwise("/home");
             
             $stateProvider
-              .state('home', {
+              .state('login', {
                   url: "/",
-                  templateUrl: "home.html",
-                  controller: "home_controller"
+                  templateUrl: "login.html",
+                  controller: "login_controller"
               })
-			  .state('mainState', {
-				  url: "/main",
-				  templateUrl: "main.html",
-				  controller: "main_controller"
+			  .state('home', {
+				  url: "/home",
+				  templateUrl: "home.html",
+				  controller: "home_controller",
+				  onEnter: function($state, $timeout, $rootScope){
+					if ($rootScope.auth == false){
+						$timeout(function(){
+							$state.go('login');
+						}, 0);
+					}
+				  }					
 			  })
 			  .state('contact', {
 				  url: "/contact",
@@ -27,6 +34,11 @@
 				  url: "/about",
 				  templateUrl: "about.html",
 				  controller: "about_controller"
+			  })
+			  .state('register', {
+				  url: "/register",
+				  templateUrl: "register.html",
+				  controller: "register_controller"
 			  });
         });
 })();

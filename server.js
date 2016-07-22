@@ -4,10 +4,10 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express
-var app        = express();                 // define our app using express
+var express    = require('express');        // call express             
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
+<<<<<<< HEAD
 var api_routes =  require('./API/api')
 var path = require('path');
 var timeout = require('connect-timeout'); //express v4
@@ -20,6 +20,22 @@ var localStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 
+=======
+var expressValidator = require('express-validator');
+var api_routes =  require('./API/api');
+var flash = require('connect-flash');
+var passport = require('passport');
+var session = require('express-session');
+var LocalStrategy = require('passport-local').Strategy;
+var path = require('path');
+var db = require('./db');
+var timeout = require('connect-timeout'); //express v4
+
+var routes = require('./routes/index');
+var users = require('./routes/users');
+
+var app = express();    
+>>>>>>> Front_End
 
 app.use(timeout(120000));
 app.use(haltOnTimedout);
@@ -32,20 +48,18 @@ function haltOnTimedout(req, res, next){
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// Set up session
+app.use(cookieParser());
 app.use(session({
 	secret: 'secret',
 	saveUninitialized: true,
 	resave: true
 }));
 
-// Init passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Set up validator (Middleware Options: https://github.com/ctavan/express-validator)
-app.use(validator({
+// Validator setup.
+app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
       var namespace = param.split('.')
       , root    = namespace.shift()
@@ -62,18 +76,21 @@ app.use(validator({
   }
 }));
 
-// Set up flash
+// Flash setup.
 app.use(flash());
-//Flash Global Vars
-app.use(function(req, res, next) {
-	res.locals.success_msg = req.flash('success_msg');
-	res.locals.error_msg = req.flash('error_msg');
-	res.locals.error = req.flash('error');
-	next();
+app.use(function (req, res, next) {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
 });
 
-// Set our port
-var port = process.env.PORT || 8080;        
+app.use('/', routes);
+app.use('/users', users);
+
+var port = process.env.PORT || 8080;        // set our port
+
 
 // more routes for our API will happen here
 
@@ -85,9 +102,9 @@ app.use('/api', api_routes);
 app.use('/js', express.static(__dirname + '/Public/JS'));
 app.use('/css', express.static(__dirname + '/Public/CSS'));
 app.use('/Controllers', express.static(__dirname + '/Controllers'));
-//Fetching index.html as default if others fall through.
+//Fetching 404 as default if others fall through.
 app.all('/*', function(req, res, next) {
-	res.sendFile('/Views/index.html', { root: __dirname });
+	res.sendFile('/Views/404.html', { root: __dirname });
 });
 
 // START THE SERVER

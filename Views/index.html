@@ -30,9 +30,14 @@
 					<li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
 					<li ui-sref-active="active"><a ui-sref="about">About</a></li>
 				</ul>
+				<form action="/users/logout" method="get" style="float: right; margin-top: 10px">
+					<button class="btn btn-default" type="submit">Log out</button>
+				</form>
 			</div>
+			
 		</div>
 	</nav>
+	
         <div class="container">
 			<div ui-view></div>
 		</div>
@@ -50,6 +55,7 @@
 	<script type="text/javascript" src="/Controllers/main_controller.js"></script>
 	<script type="text/javascript" src="/Controllers/contact_controller.js"></script>
 	<script type="text/javascript" src="/Controllers/about_controller.js"></script>
+	<script type="text/javascript" src="/Controllers/register_controller.js"></script>
 	
     </body>
 </html>

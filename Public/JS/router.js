@@ -27,6 +27,11 @@
 				  url: "/about",
 				  templateUrl: "about.html",
 				  controller: "about_controller"
+			  })
+			  .state('register', {
+				  url: "/register",
+				  templateUrl: "register.html",
+				  controller: "register_controller"
 			  });
         });
 })();

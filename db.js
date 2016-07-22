@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
-var db = mongoose.createConnection('localhost','Impakt');
+var db = mongoose.connect('mongodb://localhost/Impakt',function(){
 
 
-db.on('error', console.error.bind(console, "Connection Error:"));
-db.once('open', function(){
-	console.log("We're connected!!");
-})
+	console.log('Db has been connected!')
+});
+
+
 
 
 

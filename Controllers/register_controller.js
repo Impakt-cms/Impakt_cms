@@ -3,21 +3,19 @@
 
     angular
         .module('app')
-        .controller('home_controller', function home_controller($scope, $state, $http, $log) {
-			console.log("Home controller loaded");
+        .controller('register_controller', function register_controller($scope, $state, $http, $log) {
+			console.log("Register controller loaded");
 			
-			$scope.login = function(user) {
-				$http.post("/users/login", user)
+			$scope.register = function(user) {
+				$http.post("/users/register", user)
 					.success(function(data, status){
 						console.log('success');
-						$state.go('mainState');
+						$state.go('home');
 					})
 					.error(function (data, status, headers, config, statusTxt) {
 						console.log("Error: " + data);
 						console.log(config);
-						$scope.error = true;
 					});
 			};
-			
         });
 })();

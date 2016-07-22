@@ -7,35 +7,23 @@
 var express    = require('express');        // call express             
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-<<<<<<< HEAD
 var api_routes =  require('./API/api')
 var path = require('path');
 var timeout = require('connect-timeout'); //express v4
 var flash = require('connect-flash');
-var db = require('./db');
 var validator = require('express-validator');
 var session = require('express-session');
 var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-
-=======
-var expressValidator = require('express-validator');
-var api_routes =  require('./API/api');
-var flash = require('connect-flash');
-var passport = require('passport');
-var session = require('express-session');
-var LocalStrategy = require('passport-local').Strategy;
-var path = require('path');
 var db = require('./db');
-var timeout = require('connect-timeout'); //express v4
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();    
->>>>>>> Front_End
+var app = express();
 
 app.use(timeout(120000));
 app.use(haltOnTimedout);

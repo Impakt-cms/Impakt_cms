@@ -10,7 +10,6 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var api_routes =  require('./API/api')
 var path = require('path');
-//var db = require('./db');
 var timeout = require('connect-timeout'); //express v4
 var flash = require('connect-flash');
 var db = require('./db');

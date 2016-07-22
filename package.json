@@ -1,0 +1,41 @@
+{
+  "name": "impakt_cms",
+  "version": "1.0.0",
+  "description": "Simple CMS for creative types",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dashcraft/Impakt_CMS.git"
+  },
+  "author": "DAshcraft",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dashcraft/Impakt_CMS/issues"
+  },
+  "homepage": "https://github.com/dashcraft/Impakt_CMS#readme",
+  "dependencies": {
+    "angular": "^1.5.7",
+    "angular-resource": "^1.5.7",
+    "angular-route": "^1.5.7",
+    "bcryptjs": "^2.3.0",
+    "body-parser": "^1.15.2",
+    "connect-timeout": "^1.7.0",
+    "connect-flash": "^0.1.1",
+    "connect-timeout": "^1.7.0",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "express-validator": "^2.20.8",
+    "fs": "0.0.2",
+    "html": "0.0.10",
+    "mongodb": "^2.2.4",
+    "mongoose": "^4.5.5",
+    "passport": "^0.3.2",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
+  }
+}

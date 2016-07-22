@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var Image = require('../Models/ImageModel');
 var fs = require('fs');
-
-var dir = './Public/Assets'
+var multer = require('multer')
+var dir = './Public/Assets/'
 
 
 var newImage = new Image({
@@ -26,30 +26,57 @@ router.get('/', function(req, res) {
 router.route('/images')
 
 .post(function(req,res){
-	var d = new Date();
+	var date_time = new Date();
+	var date_string= new Date().toISOString();
 	var image = new Image();
 	
-	image.name=req.body.name;
-	
+	image.name=req.body.name+date_string;
+	image.file_path=dir+image.name+'.jpg';
+	image.meta.Title=req.body.Title;
+	image.created_at= date_time; 
 
 	image.save(function(err){
 		if(err){
 			res.send(err);
 		}
-		console.log('Success');
-		res.json({message:'Image has been created!'});
-		
+
+
+		router.use(multer({
+        dest: './public/img/profile/',
+        rename: function (fieldname, filename) {
+            return fieldname;
+        },
+        onFileUploadStart: function (file) {
+            console.log(file.originalname + ' is starting ...')
+        },
+        limits: {
+            files: 1
+        },
+        onFileUploadComplete: function (file) {
+            console.log(file.fieldname + ' uploaded to  ' + file.path)
+            imageUploaded=true;
+            console.log(req.files);
+            res.redirect('/');
+        }
+    }))
 		//Need to base 64 encode before proceeding.
-		fs.writeFile(dir,image.name+'.jpg',function(err){
+		/*fs.readFile(req.files.image.path,function(err,data){
+			if (err) {
+				console.log('There was an error!');
+			}
+			var newpath=image.file_path;
+			fs.writeFile(newpath,data,function(err){
 			if(err){
 				res.send(err);
 			}
 			res.json('The file was saved to'+dir);
 			
 		})
-	})
-
+		})*/
 })
+		console.log('Success');
+		
+	})
 .get(function(req,res){
 
 	

@@ -10,9 +10,16 @@ var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var api_routes =  require('./API/api')
 var path = require('path');
-<<<<<<< HEAD
-var db = require('./db');
+//var db = require('./db');
 var timeout = require('connect-timeout'); //express v4
+var flash = require('connect-flash');
+var db = require('./db');
+var validator = require('express-validator');
+var session = require('express-session');
+var passport = require('passport');
+var localStrategy = require('passport-local').Strategy;
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
 
 
 app.use(timeout(120000));
@@ -21,17 +28,6 @@ app.use(haltOnTimedout);
 function haltOnTimedout(req, res, next){
   if (!req.timedout) next();
 }
-=======
-var flash = require('connect-flash');
-//var db = require('./db');
-var validator = require('express-validator');
-var session = require('express-session');
-var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
-var mongo = require('mongodb');
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/impakt');
-var db = mongoose.connection;
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST

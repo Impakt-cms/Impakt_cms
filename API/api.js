@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var Image = require('../Models/ImageModel');
 var fs = require('fs');
-var multer = require('multer')
 var dir = './Public/Assets/'
 
 
@@ -57,10 +56,9 @@ router.route('/images')
 			
 		})
 		})*/
+				console.log('Success');
 })
-		console.log('Success');
-		
-	}.get(function(req,res){
+.get(function(req,res){
 
 	
 	Image.find(function(err,images){

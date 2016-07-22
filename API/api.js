@@ -41,24 +41,8 @@ router.route('/images')
 		}
 
 
-		router.use(multer({
-        dest: './public/img/profile/',
-        rename: function (fieldname, filename) {
-            return fieldname;
-        },
-        onFileUploadStart: function (file) {
-            console.log(file.originalname + ' is starting ...')
-        },
-        limits: {
-            files: 1
-        },
-        onFileUploadComplete: function (file) {
-            console.log(file.fieldname + ' uploaded to  ' + file.path)
-            imageUploaded=true;
-            console.log(req.files);
-            res.redirect('/');
-        }
-    }))
+		
+    })
 		//Need to base 64 encode before proceeding.
 		/*fs.readFile(req.files.image.path,function(err,data){
 			if (err) {
@@ -76,8 +60,7 @@ router.route('/images')
 })
 		console.log('Success');
 		
-	})
-.get(function(req,res){
+	}.get(function(req,res){
 
 	
 	Image.find(function(err,images){

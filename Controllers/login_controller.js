@@ -3,14 +3,15 @@
 
     angular
         .module('app')
-        .controller('register_controller', function register_controller($scope, $state, $http, $log) {
-			console.log("Register controller loaded");
+        .controller('login_controller', function login_controller($scope, $rootScope, $state, $http, $log) {
+			console.log("Login controller loaded");
 			
-			$scope.register = function(user) {
-				$http.post("/users/register", user)
+			$scope.login = function(user) {
+				$http.post("/users/login", user)
 					.success(function(data, status){
 						console.log('success');
-						$state.go('login');
+						$state.go('home');
+						$rootScope.auth = true;
 					})
 					.error(function (data, status, headers, config, statusTxt) {
 						console.log("Error: " + data);
@@ -18,5 +19,6 @@
 						$scope.error = true;
 					});
 			};
+			
         });
 })();

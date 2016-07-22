@@ -21,18 +21,29 @@ router.post('/register', function(req, res){
 		console.log(errors);
 		return res.status(500).send({message: "SERVER ERROR"});
 	} else {
-		console.log('SUCCESS');
-		var newUser = new User({
-			username: username,
-			password: password
+		User.getUserByUsername(username, function(err, user){
+			if (err) {
+				throw err; 
+			}
+			if (user) {
+				console.log("USER EXISTS");
+				return res.status(404).send({message: "USER EXISTS"});
+			}
+			if (!user){
+				console.log('SUCCESS');
+				
+				var newUser = new User({
+					username: username,
+					password: password
+				});
+				
+				User.createUser(newUser, function(err, user){
+					if (err) throw err;
+					console.log(user);
+				});
+				return res.status(200).send({message: "USER CREATED"});
+			}
 		});
-		
-		User.createUser(newUser, function(err, user){
-			if (err) throw err;
-			console.log(user);
-		});
-		
-		return res.status(200).send({message: "USER CREATED"});
 	}
 });
 
@@ -97,7 +108,7 @@ router.post('/login', function(req, res, next){
 router.get('/logout', function(req, res){
 	req.logout();
 	console.log("LOGGED OUT");
-	res.status(200).send({message: "LOGGED OUT"});
+	res.redirect('/');
 });
 
 module.exports = router;

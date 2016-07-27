@@ -142,7 +142,13 @@ router.route('/images/:image_id')
 			res.send(err);
 		}
 		console.log("deleting file now...")
-		fs.unlink(image.file_path)
+		fs.unlink(image.file_path, function(err){
+			if(err){
+				res.send(err);
+			}
+
+			console.log("File has been unlinked");
+		})
 
 		res.json({message:'This image was successfully deleted'})
 	})

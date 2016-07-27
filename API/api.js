@@ -1,9 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var Image = require('../Models/ImageModel');
+var UserController = ('/helperFunctions/UserController');
 var fs = require('fs');
 var dir = './Public/Assets/'
-
+var multiparty = require('connect-multiparty');
+var multipartymiddleware = multiparty();
 
 
 var newImage = new Image({
@@ -20,12 +22,14 @@ router.get('/', function(req, res) {
 //Via the front end (angular)
 
 
-
-
 // Create, List for images collection
 router.route('/images')
 
-.post(function(req,res){
+.post(multipartymiddleware,function(req,res,next){
+				UserController.uploadFile;
+				next();
+
+},function(req,res){
 	var date_time = new Date();
 	var date_string= new Date().toISOString();
 	var image = new Image();
@@ -137,7 +141,8 @@ router.route('/images/:image_id')
 		if(err){
 			res.send(err);
 		}
-
+		console.log("deleting file now...")
+		fs.unlink(image.file_path)
 
 		res.json({message:'This image was successfully deleted'})
 	})
@@ -152,3 +157,4 @@ router.route('/images/:image_id')
 
 
 module.exports = router;
+	

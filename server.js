@@ -18,7 +18,7 @@ var localStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var db = require('./db');
-
+var multiparty = require('connect-multiparty');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');

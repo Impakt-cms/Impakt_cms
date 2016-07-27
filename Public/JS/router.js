@@ -17,9 +17,10 @@
 				  url: "/home",
 				  templateUrl: "home.html",
 				  controller: "home_controller",
-				  onEnter: function($state, $timeout, $rootScope){
-					if ($rootScope.auth == false){
+				  onEnter: function($state, $timeout, $cookieStore){
+					if ($cookieStore.get('auth') == false){
 						$timeout(function(){
+							console.log("Not logged in. Redirecting to login.")
 							$state.go('login');
 						}, 0);
 					}

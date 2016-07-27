@@ -11,20 +11,34 @@
               .state('login', {
                   url: "/",
                   templateUrl: "login.html",
-                  controller: "login_controller"
+                  controller: "login_controller",
+				  resolve: {
+					  load: function($q, $cookieStore){
+						  var deferred = $q.defer();
+						  if ($cookieStore.get('auth') == false){
+							  deferred.resolve();
+						  } else {
+							  deferred.reject();
+						  }
+						  return deferred.promise;
+					  }
+				  }
               })
 			  .state('home', {
 				  url: "/home",
 				  templateUrl: "home.html",
 				  controller: "home_controller",
-				  onEnter: function($state, $timeout, $cookieStore){
-					if ($cookieStore.get('auth') == false){
-						$timeout(function(){
-							console.log("Not logged in. Redirecting to login.")
-							$state.go('login');
-						}, 0);
-					}
-				  }					
+				  resolve: {
+					  load: function($q, $cookieStore){
+						  var deferred = $q.defer();
+						  if ($cookieStore.get('auth')){
+							  deferred.resolve();
+						  } else {
+							  deferred.reject();
+						  }
+						  return deferred.promise;
+					  }
+				  }				
 			  })
 			  .state('contact', {
 				  url: "/contact",

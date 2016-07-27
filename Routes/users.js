@@ -9,9 +9,9 @@ var User = require('../Models/user'); //Current model for testing passport.
 router.post('/register', function(req, res){
 	var username = req.body.username;
 	var password = req.body.password;
-
-	console.log(username);
-	console.log(password);
+	console.log("Attempting Registration...");
+	console.log("Username: " + username);
+	console.log("Password: " + password);
 	
 	req.checkBody('username', 'Username is required').notEmpty();
 	req.checkBody('password', 'Password is required').notEmpty();
@@ -26,8 +26,8 @@ router.post('/register', function(req, res){
 				throw err; 
 			}
 			if (user) {
-				console.log("USER EXISTS");
-				return res.status(404).send({message: "USER EXISTS"});
+				console.log("USER NAME ALREADY EXISTS");
+				return res.status(404).send({message: "USER NAME ALREADY EXISTS"});
 			}
 			if (!user){
 				console.log('SUCCESS');
@@ -41,7 +41,7 @@ router.post('/register', function(req, res){
 					if (err) throw err;
 					console.log(user);
 				});
-				return res.status(200).send({message: "USER CREATED"});
+				return res.status(200).send({message: "USER CREATION SUCCESS!"});
 			}
 		});
 	}
@@ -50,11 +50,11 @@ router.post('/register', function(req, res){
 // START PASSPORT MAGIC
 passport.use(new LocalStrategy( 
   function(username, password, done) {
-	console.log("new local strategy");
+	console.log("Attempting local strategy...");
     User.getUserByUsername(username, function(err, user){
    	  if(err) throw err;
    	  if(!user){
-		console.log("Unknown User");
+		console.log("No user matches parameters...");
    		return done(null, false, {message: 'Unknown User'});
 	  }
 
@@ -64,7 +64,7 @@ passport.use(new LocalStrategy(
 			console.log("LOGGED IN");
    			return done(null, user);
    		} else {
-			console.log("Invalid password");
+			console.log("Invalid password...");
    			return done(null, false, {message: 'Invalid password'});
    		}
    	  });
@@ -90,7 +90,7 @@ router.post('/login', function(req, res, next){
 			return res.state(500).send({message: "SERVER ERROR"});
 		}
 		if (!user) { 
-			console.log("NO USER FOUND"); 
+			console.log("NO USER FOUND..."); 
 			return res.status(400).send({message: "NO USER FOUND"}); 
 		}
 		req.logIn(user, function(err) {
@@ -98,7 +98,7 @@ router.post('/login', function(req, res, next){
 				console.log("SERVER ERROR"); 
 				return res.state(500).send({message: "SERVER ERROR"});
 			}
-			console.log("LOGIN SUCCESS");
+			console.log("LOGIN SUCCESS!");
 			return res.json(user);
 		});
 	})(req, res, next);

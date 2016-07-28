@@ -9,11 +9,10 @@
 			if ($rootScope.auth) console.log("Home controller loaded");
 			
 			$scope.submit = function() {
-			  if ($scope.form.file.$valid && $scope.file) {
-				
+			  
 				console.log($scope.file);
 				$scope.upload($scope.file);
-			  }
+			  
 			  console.log("$scope.form.file.$valid is not working")
 			};
 
@@ -22,11 +21,12 @@
 				Upload.upload({
   					url: '/api/images/',
   					method: 'POST',
-  					file: file
+  					data:{name: $scope.file.name,file:$scope.file},
+  					
 				}).then(function (resp) {
 					$scope.data = resp.config.data.file.name;
-					console.log(data);
-					console.log(files);
+					console.log(resp.config.data.file);
+					console.log(resp.data)
 					console.log('Success ' + resp.config.data.file.name + 'uploaded. Response: ' + resp.data);
 				}, function (resp) {
 					console.log('Error status: ' + resp.status);

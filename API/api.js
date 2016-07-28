@@ -34,28 +34,27 @@ router.route('/images')
 	var date_string= new Date().toISOString();
 	var image = new Image();
 	
-	image.name=req.body.name+date_string;
-	image.file_path=dir+image.name+'.jpg';
+	image.name=date_string+req.body.name;
+	console.log(image.name);
+	image.file_path=dir+image.name;
+	console.log(image.file_path)
 	image.meta.Title=req.body.Title;
 	image.created_at= date_time; 
+	console.log(image.created_at)
 
-	var d = new Date();
-	var image = new Image();
-	
-	image.name=req.body.name;
+	var filepath = req.body.path;
 	
 
 
 	image.save(function(err){
+		console.log('This is before the mongoose model picks up');
 		if(err){
 			res.send(err);
 		}
 
 		console.log('Success');
 		res.json({message:'Image has been created!'});
-		
-		//Need to base 64 encode before proceeding.
-		fs.writeFile(dir,image.name+'.jpg',function(err){
+		fs.writeFile(req.body._relativePath,function(err){
 			if(err){
 				res.send(err);
 			}

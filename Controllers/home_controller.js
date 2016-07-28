@@ -9,20 +9,15 @@
 			if ($rootScope.auth) console.log("Home controller loaded");
 			
 			$scope.submit = function() {
-			  
-				console.log($scope.file);
-				$scope.upload($scope.file);
-			  
-			  console.log("$scope.form.file.$valid is not working")
+				upload($scope.file);
 			};
 
 			// upload on file select or drop
-			$scope.upload = function (file) {
+			function upload(file) {
 				Upload.upload({
   					url: '/api/images/',
   					method: 'POST',
-  					data:{name: $scope.file.name,file:$scope.file},
-  					
+  					data:{name: file.name, file: file},
 				}).then(function (resp) {
 					$scope.data = resp.config.data.file.name;
 					console.log(resp.config.data.file);

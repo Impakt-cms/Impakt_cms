@@ -29,21 +29,24 @@ router.route('/images')
 				UserController.uploadFile;
 				next();
 
-},function(req,res){
+},function(req,res){ 
+	for (var prop in req.files.file){
+		var value = req.files.file[prop];
+		console.log(prop + ': ' + value);
+	}
 	var date_time = new Date();
 	var date_string= new Date().toISOString();
 	var image = new Image();
 	
 	image.name=date_string+req.body.name;
-	console.log(image.name);
+	console.log("Image name: " + image.name);
 	image.file_path=dir+image.name;
-	console.log(image.file_path)
+	console.log("Image file path: " + image.file_path);
 	image.meta.Title=req.body.Title;
 	image.created_at= date_time; 
-	console.log(image.created_at)
+	console.log("Created at: " + image.created_at);
 
-	var filepath = req.body.path;
-	
+	var filepath = req.files.file.path;
 
 
 	image.save(function(err){
@@ -54,14 +57,16 @@ router.route('/images')
 
 		console.log('Success');
 		res.json({message:'Image has been created!'});
-		fs.writeFile(req.body._relativePath,function(err){
+		fs.writeFile(filepath,function(err){
 			if(err){
-				res.send(err);
+				console.log(err);
+				//res.send(err); <--Commented out because of Response Header Errors.
 			}
-			res.json('The file was saved to'+dir);
+			//res.json <--Commented out because of Response Header Errors.
+			console.log('The file was saved to'+dir);
 			
-		})
-	})
+		});
+	});
 
 
 		

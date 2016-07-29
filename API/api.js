@@ -39,33 +39,41 @@ router.route('/images')
 	var image = new Image();
 	
 	image.name=date_string+req.body.name;
-	console.log("Image name: " + image.name);
+
 	image.file_path=dir+image.name;
-	console.log("Image file path: " + image.file_path);
+
 	image.meta.Title=req.body.Title;
 	image.created_at= date_time; 
-	console.log("Created at: " + image.created_at);
+
 
 	var filepath = req.files.file.path;
-
+	
 
 	image.save(function(err){
-		console.log('This is before the mongoose model picks up');
 		if(err){
 			res.send(err);
 		}
 
-		console.log('Success');
 		res.json({message:'Image has been created!'});
-		fs.writeFile(filepath,function(err){
+
+		fs.readFile(filepath, function(err, data){
 			if(err){
 				console.log(err);
 				//res.send(err); <--Commented out because of Response Header Errors.
-			}
+			}	
+
+		fs.writeFile(image.file_path,data,function(err){
+			if(err){
+				console.log(err);
+				//res.send(err); <--Commented out because of Response Header Errors.
+			}	
 			//res.json <--Commented out because of Response Header Errors.
 			console.log('The file was saved to'+dir);
 			
 		});
+
+
+		})
 	});
 
 
@@ -112,6 +120,8 @@ router.route('/images/:image_id')
 			res.send(err);
 		}
 
+		console.log(image.file_path);
+		
 		res.json(image);
 	})
 })
@@ -125,7 +135,7 @@ router.route('/images/:image_id')
 
 		image.name=req.body.name;
 	
-		image.file_path = req.body.file_path;
+		image.file_path = req.file_path;
 
 		image.save(function(err){
 		if(err){
@@ -139,23 +149,38 @@ router.route('/images/:image_id')
 //so far this only deletes a the file path and not the server file upon delete
 .delete(function(req,res){
 	
-	Image.remove({
-		_id:req.params.image_id
-	}, function(err, image){
+Image.findById(req.params.image_id, function(err, image){
 		if(err){
 			res.send(err);
 		}
-		console.log("deleting file now...")
+
+		console.log(image.file_path);
 		fs.unlink(image.file_path, function(err){
 			if(err){
 				res.send(err);
 			}
 
+
+			Image.remove({
+			_id:req.params.image_id
+			}, function(err, image){
+			if(err){
+			res.send(err);
+			}
+
+		res.json({message:'This image has been deleted!'});
+		console.log("Image was deleted")
+	})
 			console.log("File has been unlinked");
 		})
-
-		res.json({message:'This image was successfully deleted'})
+		
 	})
+
+
+
+
+
+	
 })
 
 

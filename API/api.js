@@ -6,14 +6,12 @@ var fs = require('fs');
 var dir = './Public/Assets/'
 var multiparty = require('connect-multiparty');
 var multipartymiddleware = multiparty();
+var auth = require('../Models/user');
 
 
-var newImage = new Image({
-	name:'New Image Name'
-})
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });
+    res.json({ message: 'This is the images crud api' });
 
 });
 
@@ -25,7 +23,7 @@ router.get('/', function(req, res) {
 // Create, List for images collection
 router.route('/images')
 
-.post(multipartymiddleware,function(req,res,next){
+.post(auth.isAuthenticated,multipartymiddleware,function(req,res,next){
 				UserController.uploadFile;
 				next();
 
@@ -38,7 +36,7 @@ router.route('/images')
 	var date_string= new Date().toISOString();
 	var image = new Image();
 	
-	image.name=date_string+req.body.name;
+	image.name=date_string+req.files.file.name;
 
 	image.file_path=dir+image.name;
 
@@ -76,24 +74,6 @@ router.route('/images')
 		})
 	});
 
-
-		
-    
-		//Need to base 64 encode before proceeding.
-		/*fs.readFile(req.files.image.path,function(err,data){
-			if (err) {
-				console.log('There was an error!');
-			}
-			var newpath=image.file_path;
-			fs.writeFile(newpath,data,function(err){
-			if(err){
-				res.send(err);
-			}
-			res.json('The file was saved to'+dir);
-			
-		})
-		})*/
-				console.log('Success');
 })
 .get(function(req,res){
 
@@ -111,7 +91,7 @@ router.route('/images')
 
 
 
-//Find by ID, singular requests for instance
+//Find by ID, singular requests
 router.route('/images/:image_id')
 
 .get(function(req,res){
@@ -126,7 +106,7 @@ router.route('/images/:image_id')
 	})
 })
 
-.put(function(req,res){
+.put(auth.isAuthenticated,function(req,res){
 	Image.findById(req.params.image_id, function(err, image){
 
 		if (err){
@@ -147,7 +127,7 @@ router.route('/images/:image_id')
 	})
 })
 //so far this only deletes a the file path and not the server file upon delete
-.delete(function(req,res){
+.delete(auth.isAuthenticated,function(req,res){
 	
 Image.findById(req.params.image_id, function(err, image){
 		if(err){

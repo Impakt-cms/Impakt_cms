@@ -43,7 +43,12 @@
 
 					})*/
 
-				  //Upload.upload({..., data: {file: files[i]}, ...})...;
+					Upload.upload({
+  					url: '/api/images/',
+  					method: 'POST',
+  					data:{file: files[i]},
+				})
+
 				}
 				// or send them all together for HTML5 browsers:
 				//Upload.upload({..., data: {file: files}, ...})...;

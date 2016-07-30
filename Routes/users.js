@@ -5,6 +5,91 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../Models/user'); //Current model for testing passport.
 
+
+
+//CRUD FOR USERS ROUTE
+
+
+//DISPLAY USERS
+router.route('/display',User.isAuthenticated)
+.get(function(req,res){
+
+	User.find(function(err, users){
+
+		if(err){
+			res.json({'Error':err})
+		}
+
+		res.json(users)
+	})
+
+})
+
+
+//UPDATE AND DELETE USERS
+
+router.route('/display/:user_id',User.isAuthenticated)
+.get(function(req,res){
+	User.findById(req.params.user_id, function(err, user){
+		if(err){
+			res.send(err);
+		}
+
+		console.log(user.username)
+		
+		res.json(user);
+	})
+})
+
+
+
+.put(function(req,res){
+
+User.findById(req.params.user_id, function(err, user){
+
+		if (err){
+			res.send(err);
+		}
+
+		user.username=req.body.name;
+	
+		bcrypt.genSalt(10, function(err, salt) {
+	    bcrypt.hash(user.password, salt, function(err, hash) {
+	        user.password = hash;
+	        user.save(function(err){
+	        	if(err){
+	        		res.json({'error':err})
+	        	}
+
+	        console.log("User has been updated")
+	        });
+	    });
+	});
+	})
+})
+
+.delete(function(req,res){
+User.findById(req.params.user_id, function(err, user){
+		if(err){
+			res.send(err);
+		}
+
+			User.remove({
+			_id:req.params.user_id
+			}, function(err, user){
+			if(err){
+			res.send(err);
+			}
+
+			console.log("User was removed successfully");
+		})
+		res.json({'message':'User has been deleted'})
+})
+
+
+})
+
+
 // REGISTER METHOD
 router.post('/register', function(req, res){
 	var username = req.body.username;

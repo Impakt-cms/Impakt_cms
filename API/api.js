@@ -36,7 +36,7 @@ router.route('/images')
 	var date_string= new Date().toISOString();
 	var image = new Image();
 	
-	image.name=date_string+req.files.file.name;
+	image.name=date_string+'Image1.jpg';
 
 	image.file_path=dir+image.name;
 	image.meta.Title=req.body.Title;

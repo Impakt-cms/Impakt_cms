@@ -39,7 +39,6 @@ router.route('/images')
 	image.name=date_string+req.files.file.name;
 
 	image.file_path=dir+image.name;
-
 	image.meta.Title=req.body.Title;
 	image.created_at= date_time; 
 

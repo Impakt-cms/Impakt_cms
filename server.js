@@ -20,8 +20,8 @@ var mongoose = require('mongoose');
 var db = require('./db');
 var multiparty = require('connect-multiparty');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./Routes/index');
+var users = require('./Routes/users');
 
 var app = express();
 

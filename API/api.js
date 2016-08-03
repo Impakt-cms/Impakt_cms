@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Image = require('../Models/ImageModel');
+var Image = require('../Models/imageModel');
 var UserController = ('/helperFunctions/UserController');
 var fs = require('fs');
 var dir = './Public/Assets/'

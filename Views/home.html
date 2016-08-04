@@ -1,16 +1,18 @@
-<h1 class="text-center">This is the MAIN page.</h1>
-<h2 ng-model="data"></h2>
-<form name="form">
-	Single Image with Validations
-	<div class="btn btn-primary" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
-		ngf-accept="'image/*'" ngf-max-size="2000MB" ngf-min-height="100"
-		ngf-resize="{width: 100, height: 100}"> Select </div>
-	<br>
-	Multiple files
-	<div class="btn btn-primary" ngf-select ng-model="files" ngf-multiple="true">Select</div>
-	<br>
-	Drop files: 
-	<div ngf-drop ng-model="files" class="drop-box" ngf-drag-over-class="'dragover'">Drop</div>
-	<br>
-	<button class="btn btn-success" type="submit" ng-click="submit()">submit</button>
-</form>
+<div class="row homepage">
+	<span class="rightjustify">Booking</span>
+	<div class="col-md-6 col-md-offset-3">
+		<h1 class="text-center">This is the MAIN page.</h1>
+		<h2 ng-model="data"></h2>
+	    <form name="form">
+			<div>Single Image with Validations
+			<span class="btn btn-primary" ngf-select ng-model="file" name="file" ngf-pattern="'image/*'"
+				ngf-accept="'image/*'" ngf-max-size="2000MB" ngf-min-height="100"
+				ngf-resize="{width: 100, height: 100}"> Select </span></div>
+			<div>Multiple files
+			<span class="btn btn-primary" ngf-select ng-model="files" ngf-multiple="true">Select</span></div>
+			<div>Drop files: 
+			<div ngf-drop ng-model="files" class="drop-box" ngf-drag-over-class="'dragover'">Drop</div></div>
+			<button class="btn btn-success" type="submit" ng-click="submit()">submit</button>
+		</form>
+	</div>
+</div>

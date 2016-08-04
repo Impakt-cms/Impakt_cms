@@ -18,3 +18,12 @@ body {
 	border-color: #0E0;
 	background-color: #B2FAB2;
 }
+
+.rightjustify {
+	position: absolute;
+    right: 25px;
+    font-size: 125%;
+    color: #9d9d9d;
+    padding: 5px;
+    border: 1px solid #9d9d9d;
+}

@@ -28,7 +28,7 @@
 				  url: "/home",
 				  templateUrl: "home.html",
 				  controller: "home_controller",
-				  resolve: {
+				  /*resolve: {
 					  load: function($q, $cookieStore){
 						  var deferred = $q.defer();
 						  if ($cookieStore.get('auth')){
@@ -38,7 +38,7 @@
 						  }
 						  return deferred.promise;
 					  }
-				  }				
+				  }	*/			
 			  })
 			  .state('contact', {
 				  url: "/contact",

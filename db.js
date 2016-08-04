@@ -1,13 +1,14 @@
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-var db = mongoose.connect('mongodb://localhost/Impakt',function(){
+var uri = process.env.MONGOLAB_URI ||
+    process.env.MONGOHQ_URL || 
+    'mongodb://localhost/Impakt';
+
+var db = mongoose.connect(uri,function(){
 
 
 	console.log('Db has been connected!')
 });
-
-
-
 
 
 

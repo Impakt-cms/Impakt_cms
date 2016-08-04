@@ -36,15 +36,23 @@ router.route('/images')
 	var date_string= new Date().toISOString();
 	var image = new Image();
 	
-	image.name=date_string+'Image1.jpg';
+	
 
-	image.file_path=dir+image.name;
 	image.meta.Title=req.body.Title;
+	
+	image.name=date_string+encodeuri(image.meta.Title)+'.jpg';
+	
 	image.created_at= date_time; 
+	image.category = req.body.category;
 
+	if(!fs.existsSync(dir+image.category)){
+		fs.mkdirSync(dir+image.category)
+	}
 
+	image.file_path=dir+image.category+image.name;
 	var filepath = req.files.file.path;
 	
+
 
 	image.save(function(err){
 		if(err){
@@ -56,12 +64,14 @@ router.route('/images')
 		fs.readFile(filepath, function(err, data){
 			if(err){
 				console.log(err);
+				res.json(err);
 				//res.send(err); <--Commented out because of Response Header Errors.
 			}	
 
 		fs.writeFile(image.file_path,data,function(err){
 			if(err){
 				console.log(err);
+				res.json(err);
 				//res.send(err); <--Commented out because of Response Header Errors.
 			}	
 			//res.json <--Commented out because of Response Header Errors.
@@ -80,7 +90,7 @@ router.route('/images')
 	Image.find(function(err,images){
 
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 
 		res.json(images);
@@ -96,7 +106,7 @@ router.route('/images/:image_id')
 .get(function(req,res){
 	Image.findById(req.params.image_id, function(err, image){
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 
 		console.log(image.file_path);
@@ -109,7 +119,7 @@ router.route('/images/:image_id')
 	Image.findById(req.params.image_id, function(err, image){
 
 		if (err){
-			res.send(err);
+			res.json(err);
 		}
 
 		image.name=req.body.name;
@@ -118,7 +128,7 @@ router.route('/images/:image_id')
 
 		image.save(function(err){
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 		res.json({message:'This image has been updated!'});
 	})
@@ -130,13 +140,13 @@ router.route('/images/:image_id')
 	
 Image.findById(req.params.image_id, function(err, image){
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 
 		console.log(image.file_path);
 		fs.unlink(image.file_path, function(err){
 			if(err){
-				res.send(err);
+				res.json(err);
 			}
 
 

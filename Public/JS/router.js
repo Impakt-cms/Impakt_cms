@@ -45,6 +45,11 @@
 				  templateUrl: "contact.html",
 				  controller: "contact_controller"
 			  })
+			  .state('booking', {
+				  url: "/booking",
+				  templateUrl: "booking.html",
+				  controller: "booking_controller"
+			  })
 			  .state('about', {
 				  url: "/about",
 				  templateUrl: "about.html",
@@ -54,6 +59,6 @@
 				  url: "/register",
 				  templateUrl: "register.html",
 				  controller: "register_controller"
-			  });
+			  })
         });
 })();

@@ -31,6 +31,11 @@ function haltOnTimedout(req, res, next){
   if (!req.timedout) next();
 }
 
+process.on('uncaughtException', function (err) {
+  console.log('Caught exception: ' + err);
+});
+
+
 // configure app to use bodyParser()
 // this will let us get the data from a POST
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -89,7 +94,7 @@ app.use('/api', api_routes);
 app.use('/js', express.static(__dirname + '/public/admin/JS'));
 app.use('/css', express.static(__dirname + '/public/admin/CSS'));
 app.use('/Controllers', express.static(__dirname + '/public/admin/controllers'));
-
+app.use(express.static('assets'))
 //Fetching 404 as default if others fall through.
 app.all('/*', function(req, res, next) {
 	res.sendFile('./public/admin/views/404.html', { root: __dirname });

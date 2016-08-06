@@ -49,7 +49,8 @@ router.route('/images')
 		fs.mkdirSync(dir+image.category)
 	}
 
-	image.file_path=dir+image.category+"/"+image.name;
+	image.file_path="/"+image.category+"/"+image.name;
+	var pathtosave =dir+image.category+"/"+image.name;
 	console.log(image.file_path);
 	var filepath = req.files.file.path;
 	
@@ -69,7 +70,7 @@ router.route('/images')
 				//res.send(err); <--Commented out because of Response Header Errors.
 			}	
 
-		fs.writeFile(image.file_path,data,function(err){
+		fs.writeFile(pathtosave,data,function(err){
 			if(err){
 				console.log(err);
 				res.json(err);
@@ -148,9 +149,10 @@ Image.findById(req.params.image_id, function(err, image){
 		}
 
 		console.log(image.file_path);
-		fs.unlink(image.file_path, function(err){
+		fs.unlink(dir+image.category+"/"+image.name, function(err){
 			if(err){
 				res.json(err);
+				console.log(err);
 			}
 
 
@@ -158,7 +160,8 @@ Image.findById(req.params.image_id, function(err, image){
 			_id:req.params.image_id
 			}, function(err, image){
 			if(err){
-			res.send(err);
+			res.json(err);
+			console.log(err);
 			}
 
 		res.json({message:'This image has been deleted!'});

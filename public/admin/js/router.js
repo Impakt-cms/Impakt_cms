@@ -28,7 +28,7 @@
 				  url: "/home",
 				  templateUrl: "home.html",
 				  controller: "home_controller",
-				  resolve: {
+				  /*resolve: {
 					  load: function($q, $cookieStore){
 						  var deferred = $q.defer();
 						  if ($cookieStore.get('auth')){
@@ -38,12 +38,17 @@
 						  }
 						  return deferred.promise;
 					  }
-				  }				
+				  }	*/			
 			  })
 			  .state('contact', {
 				  url: "/contact",
 				  templateUrl: "contact.html",
 				  controller: "contact_controller"
+			  })
+			  .state('booking', {
+				  url: "/booking",
+				  templateUrl: "booking.html",
+				  controller: "booking_controller"
 			  })
 			  .state('about', {
 				  url: "/about",
@@ -54,6 +59,6 @@
 				  url: "/register",
 				  templateUrl: "register.html",
 				  controller: "register_controller"
-			  });
+			  })
         });
 })();

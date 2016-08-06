@@ -18,3 +18,12 @@ body {
 	border-color: #0E0;
 	background-color: #B2FAB2;
 }
+
+
+
+.image-display img{
+	float:left;
+	max-height:350px;
+	max-width:425px;
+}
+

@@ -54,7 +54,7 @@ router.route('/images')
 	var filepath = req.files.file.path;
 	
 
-
+	for(var file in req.files){
 	image.save(function(err){
 		if(err){
 			res.send(err);
@@ -82,7 +82,10 @@ router.route('/images')
 
 
 		})
-	});
+	})
+};
+
+
 
 })
 .get(function(req,res){

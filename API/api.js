@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var Image = require('../Models/imageModel');
+var Image = require('../models/imageModel');
 var UserController = ('/helperFunctions/UserController');
 var fs = require('fs');
-var dir = './Public/Assets/'
+var dir = './assets/'
 var multiparty = require('connect-multiparty');
 var multipartymiddleware = multiparty();
-var auth = require('../Models/user');
+var auth = require('../models/user');
 
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
@@ -40,7 +40,7 @@ router.route('/images')
 
 	image.meta.Title=req.body.Title;
 	
-	image.name=date_string+encodeuri(image.meta.Title)+'.jpg';
+	image.name=date_string+image.meta.Title+'.jpg';
 	
 	image.created_at= date_time; 
 	image.category = req.body.category;
@@ -49,7 +49,8 @@ router.route('/images')
 		fs.mkdirSync(dir+image.category)
 	}
 
-	image.file_path=dir+image.category+image.name;
+	image.file_path=dir+image.category+"/"+image.name;
+	console.log(image.file_path);
 	var filepath = req.files.file.path;
 	
 

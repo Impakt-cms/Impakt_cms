@@ -7,7 +7,7 @@
 var express    = require('express');        // call express             
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var api_routes =  require('./API/api')
+var api_routes =  require('./api/api')
 var path = require('path');
 var timeout = require('connect-timeout'); //express v4
 var flash = require('connect-flash');
@@ -17,11 +17,10 @@ var passport = require('passport');
 var localStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
-var db = require('./db');
+var db = require('./data/db');
 var multiparty = require('connect-multiparty');
 
-var routes = require('./Routes/index');
-var users = require('./Routes/users');
+var users = require('./api/users');
 
 var app = express();
 
@@ -74,7 +73,7 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', routes);
+
 app.use('/users', users);
 
 var port = process.env.PORT || 8080;        // set our port
@@ -84,15 +83,16 @@ var port = process.env.PORT || 8080;        // set our port
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use(express.static(path.join(__dirname, '/Views')));
+app.use(express.static(path.join(__dirname, '/public/admin/views')));
 //Using express.static to fetch different file types.
 app.use('/api', api_routes);
-app.use('/js', express.static(__dirname + '/Public/JS'));
-app.use('/css', express.static(__dirname + '/Public/CSS'));
-app.use('/Controllers', express.static(__dirname + '/Controllers'));
+app.use('/js', express.static(__dirname + '/public/admin/JS'));
+app.use('/css', express.static(__dirname + '/public/admin/CSS'));
+app.use('/Controllers', express.static(__dirname + '/public/admin/controllers'));
+
 //Fetching 404 as default if others fall through.
 app.all('/*', function(req, res, next) {
-	res.sendFile('/Views/404.html', { root: __dirname });
+	res.sendFile('./public/admin/views/404.html', { root: __dirname });
 });
 
 // START THE SERVER

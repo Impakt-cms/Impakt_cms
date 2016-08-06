@@ -60,5 +60,25 @@
 				  templateUrl: "register.html",
 				  controller: "register_controller"
 			  })
+<<<<<<< HEAD
+=======
+			  .state('image', {
+			  	url:"/imagemanager",
+			  	templateUrl: "imageUpload.html",
+			  	controller: "image_controller",
+			  	resolve: {
+					  load: function($q, $cookieStore){
+						  var deferred = $q.defer();
+						  if ($cookieStore.get('auth')){
+							  deferred.resolve();
+						  } else {
+							  deferred.reject();
+						  }
+						  return deferred.promise;
+					  }
+				  }
+			  });
+
+>>>>>>> master
         });
 })();

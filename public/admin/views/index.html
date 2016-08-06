@@ -30,6 +30,8 @@
 					<li ui-sref-active="active"><a ui-sref="contact">Contact</a></li>
 					<li ui-sref-active="active"><a ui-sref="booking">Booking</a></li>
 					<li ui-sref-active="active"><a ui-sref="about">About</a></li>
+
+					<li ng-show="auth" ui-sref-active="active"><a ui-sref="image">Images</a></li>
 				</ul>
 				<form action="/users/logout" method="get" style="float: right; margin-top: 10px">
 					<button ng-show="auth" ng-controller="logout_controller" class="btn btn-default" type="submit" ng-click="logout()">Log out</button>
@@ -59,6 +61,7 @@
 	<script type="text/javascript" src="/Controllers/home_controller.js"></script>
 	<script type="text/javascript" src="/Controllers/contact_controller.js"></script>
 	<script type="text/javascript" src="/Controllers/about_controller.js"></script>
+	<script type="text/javascript" src="/Controllers/image_controller.js"></script>
 	<script type="text/javascript" src="/Controllers/register_controller.js"></script>
 	
     </body>

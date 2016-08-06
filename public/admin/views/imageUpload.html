@@ -1,0 +1,45 @@
+<h1 class="text-center">This is the MAIN page.</h1>
+
+<div class=""ng-repeat="img in images">
+<ul class="box">
+<img src="{{img.file_path}}" alt="" >
+<button class="btn btn-primary" id="{{img._id}}" data-ng-click="delete($event)">Delete Image</button>
+</ul>
+</div>
+
+
+
+
+<h2 ng-model="data"></h2>
+
+<div ng-repeat="f in files"><div class="image-display"><img ngf-thumbnail="f" alt="">
+ <span class="progress" ng-show="f.progress >= 0">
+        <div class="progress-bar" role="progressbar"
+        arial-valuenow="{{f.progress}}"  
+            ng-bind="f.progress + '%'"></div>
+      </span>
+</div>
+</div>
+
+<div>
+Multiple files
+	<button class="btn btn-primary"  ngf-select="uploadFiles($files, $invalidFiles)" multiple
+          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+      Select Files</button>
+  <br><br>
+  Files:
+  <ul>
+    <li ng-repeat="f in errFiles" style="font:smaller">
+    {{f.name}} {{f.$error}} {{f.$errorParam}}
+    </li> 
+  </ul>
+  {{errorMsg}}
+	<br>
+	Drop files: 
+	<div ngf-drop="uploadFiles($files)" class="drop-box"
+  ngf-drag-over-class="'dragover'" ngf-multiple="true" 
+  ngf-pattern="'image/*,application/pdf'">Drop</div>
+<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+	<br>
+
+</div>

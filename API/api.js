@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var Image = require('../Models/imageModel');
+var Image = require('../models/imageModel');
 var UserController = ('/helperFunctions/UserController');
 var fs = require('fs');
-var dir = './Public/Assets/'
+var dir = './assets/'
 var multiparty = require('connect-multiparty');
 var multipartymiddleware = multiparty();
-var auth = require('../Models/user');
+var auth = require('../models/user');
 
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
@@ -36,16 +36,26 @@ router.route('/images')
 	var date_string= new Date().toISOString();
 	var image = new Image();
 	
-	image.name=date_string+'Image1.jpg';
+	
 
-	image.file_path=dir+image.name;
 	image.meta.Title=req.body.Title;
+	
+	image.name=date_string+image.meta.Title+'.jpg';
+	
 	image.created_at= date_time; 
+	image.category = req.body.category;
 
+	if(!fs.existsSync(dir+image.category)){
+		fs.mkdirSync(dir+image.category)
+	}
 
+	image.file_path="/"+image.category+"/"+image.name;
+	var pathtosave =dir+image.category+"/"+image.name;
+	console.log(image.file_path);
 	var filepath = req.files.file.path;
 	
 
+	for(var file in req.files){
 	image.save(function(err){
 		if(err){
 			res.send(err);
@@ -56,12 +66,14 @@ router.route('/images')
 		fs.readFile(filepath, function(err, data){
 			if(err){
 				console.log(err);
+				res.json(err);
 				//res.send(err); <--Commented out because of Response Header Errors.
 			}	
 
-		fs.writeFile(image.file_path,data,function(err){
+		fs.writeFile(pathtosave,data,function(err){
 			if(err){
 				console.log(err);
+				res.json(err);
 				//res.send(err); <--Commented out because of Response Header Errors.
 			}	
 			//res.json <--Commented out because of Response Header Errors.
@@ -71,7 +83,10 @@ router.route('/images')
 
 
 		})
-	});
+	})
+};
+
+
 
 })
 .get(function(req,res){
@@ -80,7 +95,7 @@ router.route('/images')
 	Image.find(function(err,images){
 
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 
 		res.json(images);
@@ -96,7 +111,7 @@ router.route('/images/:image_id')
 .get(function(req,res){
 	Image.findById(req.params.image_id, function(err, image){
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 
 		console.log(image.file_path);
@@ -109,7 +124,7 @@ router.route('/images/:image_id')
 	Image.findById(req.params.image_id, function(err, image){
 
 		if (err){
-			res.send(err);
+			res.json(err);
 		}
 
 		image.name=req.body.name;
@@ -118,7 +133,7 @@ router.route('/images/:image_id')
 
 		image.save(function(err){
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 		res.json({message:'This image has been updated!'});
 	})
@@ -130,13 +145,14 @@ router.route('/images/:image_id')
 	
 Image.findById(req.params.image_id, function(err, image){
 		if(err){
-			res.send(err);
+			res.json(err);
 		}
 
 		console.log(image.file_path);
-		fs.unlink(image.file_path, function(err){
+		fs.unlink(dir+image.category+"/"+image.name, function(err){
 			if(err){
-				res.send(err);
+				res.json(err);
+				console.log(err);
 			}
 
 
@@ -144,7 +160,8 @@ Image.findById(req.params.image_id, function(err, image){
 			_id:req.params.image_id
 			}, function(err, image){
 			if(err){
-			res.send(err);
+			res.json(err);
+			console.log(err);
 			}
 
 		res.json({message:'This image has been deleted!'});

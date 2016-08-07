@@ -91,7 +91,7 @@ var port = process.env.PORT || 8080;        // set our port
 app.use(express.static(path.join(__dirname, '/public/admin/views')));
 //Using express.static to fetch different file types.
 app.use('/api', api_routes);
-
+app.use(express.static(__dirname+'/assets'));
 app.use('/js', express.static(__dirname + '/public/admin/js'));
 app.use('/css', express.static(__dirname + '/public/admin/css'));
 app.use('/controllers', express.static(__dirname + '/public/admin/controllers'));

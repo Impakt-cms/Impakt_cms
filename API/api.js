@@ -1,12 +1,12 @@
 var express = require('express');
 var router = express.Router();
-var Image = require('../models/imageModel');
+var Image = require('../Models/imageModel');
 var UserController = ('/helperFunctions/UserController');
 var fs = require('fs');
 var dir = './assets/'
 var multiparty = require('connect-multiparty');
 var multipartymiddleware = multiparty();
-var auth = require('../models/user');
+var auth = require('../Models/user');
 
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)

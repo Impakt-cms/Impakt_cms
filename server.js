@@ -7,7 +7,7 @@
 var express    = require('express');        // call express             
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var api_routes =  require('./api/api')
+var api_routes =  require('./API/api')
 var path = require('path');
 var timeout = require('connect-timeout'); //express v4
 var flash = require('connect-flash');
@@ -91,10 +91,13 @@ var port = process.env.PORT || 8080;        // set our port
 app.use(express.static(path.join(__dirname, '/public/admin/views')));
 //Using express.static to fetch different file types.
 app.use('/api', api_routes);
-app.use('/js', express.static(__dirname + '/public/admin/JS'));
-app.use('/css', express.static(__dirname + '/public/admin/CSS'));
-app.use('/Controllers', express.static(__dirname + '/public/admin/controllers'));
-app.use(express.static('assets'))
+
+app.use('/js', express.static(__dirname + '/public/admin/js'));
+app.use('/css', express.static(__dirname + '/public/admin/css'));
+app.use('/controllers', express.static(__dirname + '/public/admin/controllers'));
+app.use('/directives', express.static(__dirname + '/public/admin/directives'));
+
+
 //Fetching 404 as default if others fall through.
 app.all('/*', function(req, res, next) {
 	res.sendFile('./public/admin/views/404.html', { root: __dirname });
@@ -104,9 +107,3 @@ app.all('/*', function(req, res, next) {
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
-
-
-
-
-

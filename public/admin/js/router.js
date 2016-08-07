@@ -27,7 +27,7 @@
 			  .state('home', {
 				  url: "/home",
 				  templateUrl: "home.html",
-				  controller: "home_controller",
+				  controller: "home_controller"
 				  /*resolve: {
 					  load: function($q, $cookieStore){
 						  var deferred = $q.defer();

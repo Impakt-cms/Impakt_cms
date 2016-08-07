@@ -40,7 +40,7 @@ router.route('/images')
 
 	image.meta.Title=req.body.Title;
 	
-	image.name=date_string+image.meta.Title+'.jpg';
+	image.name=date_string+'.jpg';
 	
 	image.created_at= date_time; 
 	image.category = req.body.category;

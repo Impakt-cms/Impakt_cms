@@ -86,8 +86,8 @@ var port = process.env.PORT || 8080;        // set our port
 app.use(express.static(path.join(__dirname, '/public/admin/views')));
 //Using express.static to fetch different file types.
 app.use('/api', api_routes);
-app.use('/js', express.static(__dirname + '/public/admin/JS'));
-app.use('/css', express.static(__dirname + '/public/admin/CSS'));
+app.use('/js', express.static(__dirname + '/public/admin/js'));
+app.use('/css', express.static(__dirname + '/public/admin/css'));
 app.use('/Controllers', express.static(__dirname + '/public/admin/controllers'));
 
 //Fetching 404 as default if others fall through.
@@ -99,9 +99,3 @@ app.all('/*', function(req, res, next) {
 // =============================================================================
 app.listen(port);
 console.log('Magic happens on port ' + port);
-
-
-
-
-
-

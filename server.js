@@ -88,7 +88,8 @@ app.use(express.static(path.join(__dirname, '/public/admin/views')));
 app.use('/api', api_routes);
 app.use('/js', express.static(__dirname + '/public/admin/js'));
 app.use('/css', express.static(__dirname + '/public/admin/css'));
-app.use('/Controllers', express.static(__dirname + '/public/admin/controllers'));
+app.use('/controllers', express.static(__dirname + '/public/admin/controllers'));
+app.use('/directives', express.static(__dirname + '/public/admin/directives'));
 
 //Fetching 404 as default if others fall through.
 app.all('/*', function(req, res, next) {

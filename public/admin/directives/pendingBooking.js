@@ -1,4 +1,4 @@
-angular.module('pendingBooking', [])
+angular.module('app')
 	.directive('pendingBooking', function() {
 		return {
 			restrict: 'E',

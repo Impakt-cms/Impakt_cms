@@ -45,12 +45,13 @@ router.route('/images')
 	image.created_at= date_time; 
 	image.category = req.body.category;
 
-	if(!fs.existsSync(dir+image.category)){
+	/*if(!fs.existsSync(dir+image.category)){
 		fs.mkdirSync(dir+image.category)
-	}
+	}*/
 
-	image.file_path="/"+image.category+"/"+image.name;
-	var pathtosave =dir+image.category+"/"+image.name;
+	image.file_path=dir+image.name;
+	
+
 	console.log(image.file_path);
 	var filepath = req.files.file.path;
 	
@@ -70,7 +71,7 @@ router.route('/images')
 				//res.send(err); <--Commented out because of Response Header Errors.
 			}	
 
-		fs.writeFile(pathtosave,data,function(err){
+		fs.writeFile(image.file_path,data,function(err){
 			if(err){
 				console.log(err);
 				res.json(err);
@@ -149,7 +150,7 @@ Image.findById(req.params.image_id, function(err, image){
 		}
 
 		console.log(image.file_path);
-		fs.unlink(dir+image.category+"/"+image.name, function(err){
+		fs.unlink(image.file_path, function(err){
 			if(err){
 				res.json(err);
 				console.log(err);

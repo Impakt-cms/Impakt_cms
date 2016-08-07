@@ -1,14 +1,11 @@
 <h1 class="text-center">This is the MAIN page.</h1>
 
-<div class=""ng-repeat="img in images">
+<div class="" ng-repeat="img in images">
 <ul class="box">
-<img src="{{img.file_path}}" alt="" >
+<img src="{{img.name}}" alt="" >
 <button class="btn btn-primary" id="{{img._id}}" data-ng-click="delete($event)">Delete Image</button>
 </ul>
 </div>
-
-
-
 
 <h2 ng-model="data"></h2>
 
@@ -20,6 +17,8 @@
       </span>
 </div>
 </div>
+
+
 
 <div>
 Multiple files

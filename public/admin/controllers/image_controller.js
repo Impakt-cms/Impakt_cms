@@ -10,10 +10,12 @@
 			if ($rootScope.auth) console.log("Image controller loaded");
 			
 			$http.get('/api/images').success(function(data){
+            
 			$scope.images = data;
-			
-
+           
 			});
+
+
 
 		$scope.refresh = function(){
 			$http.get('/api/images').success(function(data){
@@ -29,20 +31,18 @@
 
 			)}
 
+
 		$scope.uploadFiles = function(files, errFiles) {
         $scope.files = files;
         $scope.errFiles = errFiles;
         angular.forEach(files, function(file) {
+            
             file.upload = Upload.upload({
   				url: '/api/images/',
-                data: {file: file, }
+                data: {file: file }
             });
 
             file.upload.then(function (response) {
-                $timeout(function () {
-                    file.result = response.data;
-                });
-            }, function (response) {
                 if (response.status > 0)
                     $scope.errorMsg = response.status + ': ' + response.data;
             }, function (evt) {

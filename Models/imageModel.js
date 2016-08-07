@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 var imageSchema = new Schema({
   name: {type:String,required:true},
   file_path:{type:String, required:true},
-  Category: String,
-  Author: String,
+  category: String,
+  author: String,
   meta: {
     Title: String
 	},

@@ -39,7 +39,7 @@
             
             file.upload = Upload.upload({
   				url: '/api/images/',
-                data: {file: file }
+                data: {file: file}
             });
 
             file.upload.then(function (response) {
@@ -50,15 +50,10 @@
                                          evt.loaded / evt.total));
             });
         });
+                $scope.refresh();
     	}	
 
-    	$scope.refresh();
-
-        })
-         
 
 
-        
-
-        ;
+        });
 })();

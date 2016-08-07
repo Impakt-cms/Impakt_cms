@@ -75,6 +75,22 @@
 						  return deferred.promise;
 					  }
 				  }
+			  })
+			  .state('user', {
+			  	url:"/usermanager",
+			  	templateUrl: "users.html",
+			  	controller: "user_controller",
+			  	resolve: {
+					  load: function($q, $cookieStore){
+						  var deferred = $q.defer();
+						  if ($cookieStore.get('auth')){
+							  deferred.resolve();
+						  } else {
+							  deferred.reject();
+						  }
+						  return deferred.promise;
+					  }
+				  }
 			  });
 
 

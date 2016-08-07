@@ -32,6 +32,7 @@
 					<li ui-sref-active="active"><a ui-sref="about">About</a></li>
 
 					<li ng-show="auth" ui-sref-active="active"><a ui-sref="image">Images</a></li>
+					<li ng-show="auth" ui-sref-active="active"><a ui-sref="user">Users</a></li>
 				</ul>
 				<form action="/users/logout" method="get" style="float: right; margin-top: 10px">
 					<button ng-show="auth" ng-controller="logout_controller" class="btn btn-default" type="submit" ng-click="logout()">Log out</button>
@@ -65,6 +66,7 @@
 	<script type="text/javascript" src="/controllers/register_controller.js"></script>
 	<script type="text/javascript" src="/controllers/booking_controller.js"></script>
 	<script type="text/javascript" src="/controllers/image_controller.js"></script>
+	<script type="text/javascript" src="/controllers/user_controller.js"></script>
 	<script type="text/javascript" src="/directives/pendingBooking.js"></script>
 	<script type="text/javascript" src="/directives/currentBooking.js"></script>
 	<script type="text/javascript" src="/directives/bookingCalendar.js"></script>

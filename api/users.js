@@ -11,15 +11,15 @@ var User = require('../Models/user'); //Current model for testing passport.
 
 
 //DISPLAY USERS
-router.route('/display',User.isAuthenticated)
+router.route('/',User.isAuthenticated)
 .get(function(req,res){
-
+	console.log("Successfully loaded");
 	User.find(function(err, users){
 
 		if(err){
 			res.json({'Error':err})
 		}
-
+		console.log("successfully found users");
 		res.json(users)
 	})
 

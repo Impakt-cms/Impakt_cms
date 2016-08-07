@@ -8,9 +8,7 @@
 			$rootScope.auth = $cookieStore.get('auth');
 			if ($rootScope.auth) console.log("Home controller loaded");
 			
-			$scope.submit = function() {
-				upload($scope.file);
-			};
+			
 
 			
 			

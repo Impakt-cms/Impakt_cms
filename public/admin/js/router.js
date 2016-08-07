@@ -60,8 +60,6 @@
 				  templateUrl: "register.html",
 				  controller: "register_controller"
 			  })
-<<<<<<< HEAD
-=======
 			  .state('image', {
 			  	url:"/imagemanager",
 			  	templateUrl: "imageUpload.html",
@@ -79,6 +77,6 @@
 				  }
 			  });
 
->>>>>>> master
+
         });
 })();

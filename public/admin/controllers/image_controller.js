@@ -3,7 +3,7 @@
 
     angular
         .module('app')
-        .controller('image_controller', function image_controller($scope, $rootScope, $state, $http, $q, $sce, $log, $cookieStore, Upload) {
+        .controller('image_controller', function image_controller($scope, $state, $http, $q, $log, $cookieStore, Upload) {
 			
 			getImages();
 			

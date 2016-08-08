@@ -21,9 +21,11 @@
 
 <br><br>
 
-<form ng-submit="addCat(newCat)">
-	<input type="text" placeholder="Add a new category..." ng-model="newCat" required>
-	<button class="btn btn-primary" type="submit">Add Category</button>
+<form ng-submit="addCat(newCat)" class="input-group" id="addCat">
+	<input type="text" class="form-control" placeholder="Add a new category..." ng-model="newCat" required>
+	<span class="input-group-btn">
+		<button class="btn btn-primary" type="submit">Add Category</button>
+	</span>
 </form>
 <br><br>
 <div ng-show="categories.length > 0">
@@ -34,25 +36,26 @@
 <br><br>
 
 <div>
-Multiple files
-	<button class="btn btn-primary"  ngf-select="uploadFiles($files, $invalidFiles)" multiple
-          accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
-      Select Files
-	</button>
-	<br><br>
-	Files:
-	<ul>
-		<li ng-repeat="f in errFiles" style="font:smaller">
-			{{f.name}} {{f.$error}} {{f.$errorParam}}
-		</li> 
-	</ul>
-	{{errorMsg}}
+	<h2>UPLOAD FILES</h2>
+	<div ng-show="errFiles.length > 0">
+		Errors:
+		<ul>
+			<li ng-repeat="f in errFiles" style="font:smaller">
+				{{f.name}} {{f.$error}} {{f.$errorParam}}
+			</li> 
+		</ul>
+		{{errorMsg}}
+	</div>
 	<br>
-	Drop files: 
 	<div ngf-drop="uploadFiles($files)" class="drop-box"
 		ngf-drag-over-class="'dragover'" ngf-multiple="true" 
 		ngf-pattern="'image/*,application/pdf'">
-		Drop
+		<h3>Drop Files Here</h3>
+		or <br><br>
+		<button class="btn btn-primary"  ngf-select="uploadFiles($files, $invalidFiles)" multiple
+			  accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+		  Select Files
+		</button>
 	</div>
 	<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
 	<br>

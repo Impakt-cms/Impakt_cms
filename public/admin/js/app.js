@@ -8,11 +8,7 @@ angular.module('app', [
 		'angularMoment',
 		'ngCookies',
 		'ngFileUpload'
-	])
-	
-	.config(['$compileProvider', function($compileProvider){
-		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|content):/);
-	}]);
+	]);
 	
 	//Routes defined in router.js
 })();

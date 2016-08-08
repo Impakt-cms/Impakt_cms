@@ -1,62 +1,68 @@
-<div class="" ng-repeat="img in images">
-	<ul class="box">
-		<img src="{{img.name}}" alt="" ><br>
-		<span ng-if="img.category">Category: {{img.category}}</span>
+<div class="row">
+
+	<div class="col-md-6">
+		<form ng-submit="addCat(newCat)" class="input-group">
+			<input type="text" class="form-control" placeholder="Add a new category..." ng-model="newCat" required>
+			<span class="input-group-btn">
+				<button class="btn btn-primary" type="submit">Add Category</button>
+			</span>
+		</form>
 		<br><br>
-		<button class="btn btn-primary" id="{{img._id}}" data-ng-click="delete($event)">Delete Image</button>
-	</ul>
-</div>
+		<div ng-show="categories.length > 0">
+			<label>Category: </label>
+			<select ng-model="selCat" ng-options="cat as cat for cat in categories"></select>
+		</div>
 
-<h2 ng-model="data"></h2>
+		<br><br>
 
-<div ng-repeat="f in files" style="float: right">
-	<div class="image-display"><img ngf-thumbnail="f" alt="">
-		<span class="progress" ng-show="f.progress >= 0">
-			<div class="progress-bar" role="progressbar" arial-valuenow="{{f.progress}}"  
-				ng-bind="f.progress + '%'">
+		<div>
+			<h2>UPLOAD FILES</h2>
+			<div ng-show="errFiles.length > 0">
+				Errors:
+				<ul>
+					<li ng-repeat="f in errFiles" style="font:smaller">
+						{{f.name}} {{f.$error}} {{f.$errorParam}}
+					</li> 
+				</ul>
+				{{errorMsg}}
 			</div>
-		</span>
+			<br>
+			<div ngf-drop="uploadFiles($files)" class="drop-box"
+				ngf-drag-over-class="'dragover'" ngf-multiple="true" 
+				ngf-pattern="'image/*,application/pdf'">
+				<h3>Drop Files Here</h3>
+				or <br><br>
+				<button class="btn btn-primary"  ngf-select="uploadFiles($files, $invalidFiles)" multiple
+					  accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
+				  Select Files
+				</button>
+			</div>
+			<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
+			<br>
+		</div>
 	</div>
-</div>
 
-<br><br>
+	<div class="col-md-6">
+		<div class="" ng-repeat="img in images">
+			<ul class="box">
+				<img src="{{img.name}}" alt="" ><br>
+				<span ng-if="img.category">Category: {{img.category}}</span>
+				<br><br>
+				<button class="btn btn-primary" id="{{img._id}}" data-ng-click="delete($event)">Delete Image</button>
+			</ul>
+		</div>
 
-<form ng-submit="addCat(newCat)" class="input-group" id="addCat">
-	<input type="text" class="form-control" placeholder="Add a new category..." ng-model="newCat" required>
-	<span class="input-group-btn">
-		<button class="btn btn-primary" type="submit">Add Category</button>
-	</span>
-</form>
-<br><br>
-<div ng-show="categories.length > 0">
-	<label>Category: </label>
-	<select ng-model="selCat" ng-options="cat as cat for cat in categories"></select>
-</div>
+		<h2 ng-model="data"></h2>
 
-<br><br>
-
-<div>
-	<h2>UPLOAD FILES</h2>
-	<div ng-show="errFiles.length > 0">
-		Errors:
-		<ul>
-			<li ng-repeat="f in errFiles" style="font:smaller">
-				{{f.name}} {{f.$error}} {{f.$errorParam}}
-			</li> 
-		</ul>
-		{{errorMsg}}
+		<div ng-repeat="f in files" style="float: right">
+			<div class="image-display"><img ngf-thumbnail="f" alt="">
+				<span class="progress" ng-show="f.progress >= 0">
+					<div class="progress-bar" role="progressbar" arial-valuenow="{{f.progress}}"  
+						ng-bind="f.progress + '%'">
+					</div>
+				</span>
+			</div>
+		</div>
 	</div>
-	<br>
-	<div ngf-drop="uploadFiles($files)" class="drop-box"
-		ngf-drag-over-class="'dragover'" ngf-multiple="true" 
-		ngf-pattern="'image/*,application/pdf'">
-		<h3>Drop Files Here</h3>
-		or <br><br>
-		<button class="btn btn-primary"  ngf-select="uploadFiles($files, $invalidFiles)" multiple
-			  accept="image/*" ngf-max-height="1000" ngf-max-size="1MB">
-		  Select Files
-		</button>
-	</div>
-	<div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
-	<br>
+
 </div>

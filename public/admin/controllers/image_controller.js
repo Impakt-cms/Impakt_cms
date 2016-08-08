@@ -41,10 +41,11 @@
 			
 			function getCategories(){
 				$scope.categories = [];
-				$scope.categories[0] = $scope.selCat = 'Default';
+				$scope.categories[0] = $scope.selCat = "Default";
 				angular.forEach($scope.images, function (image){
-					if (image.category && $scope.categories.indexOf(image.category == -1))
+					if (image.category && $scope.categories.indexOf(image.category) < 0){
 						$scope.categories.push(image.category);
+					}
 				});
 			}
 			

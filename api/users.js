@@ -138,11 +138,12 @@ passport.use(new LocalStrategy(
 	console.log("Attempting local strategy...");
     User.getUserByUsername(username, function(err, user){
    	  if(err) throw err;
+	  console.log("No err...");
    	  if(!user){
 		console.log("No user matches parameters...");
    		return done(null, false, {message: 'Unknown User'});
 	  }
-
+	  console.log("comparing passwords");
    	  User.comparePassword(password, user.password, function(err, isMatch){
    		if(err) throw err;
    		if(isMatch){

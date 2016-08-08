@@ -36,6 +36,7 @@ module.exports.isAuthenticated = function(req, res, next) {
 
 //Find User by Username
 module.exports.getUserByUsername = function(username, callback){
+	console.log("QUERY: USERNAME = " + username);
 	var query = {username: username};
 	User.findOne(query, callback);
 }

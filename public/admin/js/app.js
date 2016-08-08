@@ -9,10 +9,10 @@ angular.module('app', [
 		'ngCookies',
 		'ngFileUpload'
 	])
-	//declare authentication global variable.
-	.run(function($rootScope, $cookieStore) {
-		$rootScope.auth = false;
-		$cookieStore.put('auth', false);
-	});
+	
+	.config(['$compileProvider', function($compileProvider){
+		$compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|file|tel|content):/);
+	}]);
+	
 	//Routes defined in router.js
 })();

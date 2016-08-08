@@ -3,7 +3,7 @@ var router = express.Router();
 var Image = require('../Models/imageModel');
 var UserController = ('/helperFunctions/UserController');
 var fs = require('fs');
-var dir = './assets/'
+var dir = './assets/';
 var multiparty = require('connect-multiparty');
 var multipartymiddleware = multiparty();
 var auth = require('../Models/user');
@@ -33,58 +33,51 @@ router.route('/images')
 		console.log(prop + ': ' + value);
 	}
 	var date_time = new Date();
-	var date_string= new Date().toISOString();
+	var date_string= new Date().toISOString().replace(new RegExp(':', 'g'),'.');
 	var image = new Image();
 	
 	
 
-	image.meta.Title=req.body.Title;
-	
-	image.name=date_string+'.jpg';
-	
-	image.created_at= date_time; 
+	image.meta.Title = req.body.Title;
+	image.name = date_string + '.jpg';
+	image.created_at = date_time; 
 	image.category = req.body.category;
+	console.log(image.category);
 
 	/*if(!fs.existsSync(dir+image.category)){
 		fs.mkdirSync(dir+image.category)
 	}*/
 
-	image.file_path=dir+image.name;
-	
-
-	console.log(image.file_path);
+	image.file_path = dir + image.name;
 	var filepath = req.files.file.path;
 	
 
 	for(var file in req.files){
-	image.save(function(err){
-		if(err){
-			res.send(err);
-		}
-
-		res.json({message:'Image has been created!'});
-
-		fs.readFile(filepath, function(err, data){
+		image.save(function(err){
 			if(err){
-				console.log(err);
-				res.json(err);
-				//res.send(err); <--Commented out because of Response Header Errors.
-			}	
-
-		fs.writeFile(image.file_path,data,function(err){
-			if(err){
-				console.log(err);
-				res.json(err);
-				//res.send(err); <--Commented out because of Response Header Errors.
-			}	
-			//res.json <--Commented out because of Response Header Errors.
-			console.log('The file was saved to'+dir);
+				res.send(err);
+			}
 			
+			res.json({message:'Image has been created!'});
+
+			fs.readFile(filepath, function(err, data){
+				if(err){
+					res.json(err);
+					//res.send(err); <--Commented out because of Response Header Errors.
+				}	
+				
+				fs.writeFile(image.file_path,data,function(err){
+					if(err){
+						console.log(err);
+						res.json(err);
+						//res.send(err); <--Commented out because of Response Header Errors.
+					}	
+					//res.json <--Commented out because of Response Header Errors.
+					console.log('The file was saved to'+dir);
+				
+				});
+			});
 		});
-
-
-		})
-	})
 };
 
 

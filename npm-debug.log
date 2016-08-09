@@ -1,0 +1,41 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node',
+1 verbose cli   '/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm',
+1 verbose cli   'start' ]
+2 info using npm@2.15.5
+3 info using node@v4.4.5
+4 verbose run-script [ 'prestart', 'start', 'poststart' ]
+5 info prestart impakt_cms@1.0.0
+6 verbose unsafe-perm in lifecycle true
+7 info impakt_cms@1.0.0 Failed to exec prestart script
+8 verbose stack Error: impakt_cms@1.0.0 prestart: `./mongod --fork --logpath /data/nul`
+8 verbose stack Exit status 100
+8 verbose stack     at EventEmitter.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/utils/lifecycle.js:217:16)
+8 verbose stack     at emitTwo (events.js:87:13)
+8 verbose stack     at EventEmitter.emit (events.js:172:7)
+8 verbose stack     at ChildProcess.<anonymous> (/home/ubuntu/.nvm/versions/node/v4.4.5/lib/node_modules/npm/lib/utils/spawn.js:24:14)
+8 verbose stack     at emitTwo (events.js:87:13)
+8 verbose stack     at ChildProcess.emit (events.js:172:7)
+8 verbose stack     at maybeClose (internal/child_process.js:827:16)
+8 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+9 verbose pkgid impakt_cms@1.0.0
+10 verbose cwd /home/ubuntu/workspace
+11 error Linux 4.2.0-c9
+12 error argv "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/node" "/home/ubuntu/.nvm/versions/node/v4.4.5/bin/npm" "start"
+13 error node v4.4.5
+14 error npm  v2.15.5
+15 error code ELIFECYCLE
+16 error impakt_cms@1.0.0 prestart: `./mongod --fork --logpath /data/nul`
+16 error Exit status 100
+17 error Failed at the impakt_cms@1.0.0 prestart script './mongod --fork --logpath /data/nul'.
+17 error This is most likely a problem with the impakt_cms package,
+17 error not with npm itself.
+17 error Tell the author that this fails on your system:
+17 error     ./mongod --fork --logpath /data/nul
+17 error You can get information on how to open an issue for this project with:
+17 error     npm bugs impakt_cms
+17 error Or if that isn't available, you can get their info via:
+17 error
+17 error     npm owner ls impakt_cms
+17 error There is likely additional logging output above.
+18 verbose exit [ 1, true ]

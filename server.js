@@ -7,7 +7,7 @@
 var express    = require('express');        // call express             
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var api_routes =  require('./API/api')
+var api_routes =  require('./api/api')
 var path = require('path');
 var timeout = require('connect-timeout'); //express v4
 var flash = require('connect-flash');

@@ -37,6 +37,8 @@
 			
 			$scope.addCat = function(cat){
 				$scope.categories.push(cat);
+				$scope.newCat = "";
+				$scope.selCat = cat;
 			};
 			
 			function getCategories(){

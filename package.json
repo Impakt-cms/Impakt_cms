@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "prestart": "./mongod --fork --logpath /data/nul || mongod --fork --logpath /dev/nul",
+    "start": "node server.js",
+    "poststop": "mongo admin --eval 'db.shutdownServer()' > /data/null || mongo admin --eval 'db.shutdownServer()' > /dev/null"
+
   },
   "repository": {
     "type": "git",

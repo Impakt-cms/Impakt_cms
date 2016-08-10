@@ -5,13 +5,13 @@ body {
 }
 
 .drop-box {
-	width: 200px;
-	height: 150px;
+	width: 300px;
+	height: 200px;
 	border: 3px dotted #CCC;
 	background-color: #EEE;
 	color: black;
 	text-align: center;
-	padding-top: 50px;
+	padding: 30px;
 }
 
 .drop-box.dragover{
@@ -32,7 +32,9 @@ body {
 	
 }
 
-
+input, select, option {
+	color: black;
+}
 
 .image-display img{
 	float:left;

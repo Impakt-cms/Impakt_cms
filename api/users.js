@@ -3,7 +3,7 @@ var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
-var User = require('../Models/user'); //Current model for testing passport.
+var User = require('../models/user'); //Current model for testing passport.
 
 
 
@@ -11,15 +11,15 @@ var User = require('../Models/user'); //Current model for testing passport.
 
 
 //DISPLAY USERS
-router.route('/display',User.isAuthenticated)
+router.route('/',User.isAuthenticated)
 .get(function(req,res){
-
+	console.log("Successfully loaded");
 	User.find(function(err, users){
 
 		if(err){
 			res.json({'Error':err})
 		}
-
+		console.log("successfully found users");
 		res.json(users)
 	})
 
@@ -138,11 +138,12 @@ passport.use(new LocalStrategy(
 	console.log("Attempting local strategy...");
     User.getUserByUsername(username, function(err, user){
    	  if(err) throw err;
+	  console.log("No err...");
    	  if(!user){
 		console.log("No user matches parameters...");
    		return done(null, false, {message: 'Unknown User'});
 	  }
-
+	  console.log("comparing passwords");
    	  User.comparePassword(password, user.password, function(err, isMatch){
    		if(err) throw err;
    		if(isMatch){

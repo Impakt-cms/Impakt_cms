@@ -8,11 +8,7 @@ angular.module('app', [
 		'angularMoment',
 		'ngCookies',
 		'ngFileUpload'
-	])
-	//declare authentication global variable.
-	.run(function($rootScope, $cookieStore) {
-		$rootScope.auth = false;
-		$cookieStore.put('auth', false);
-	});
+	]);
+	
 	//Routes defined in router.js
 })();

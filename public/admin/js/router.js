@@ -15,7 +15,7 @@
 				  resolve: {
 					  load: function($q, $cookieStore){
 						  var deferred = $q.defer();
-						  if ($cookieStore.get('auth') == false){
+						  if (!$cookieStore.get('auth')){
 							  deferred.resolve();
 						  } else {
 							  deferred.reject();
@@ -27,8 +27,8 @@
 			  .state('home', {
 				  url: "/home",
 				  templateUrl: "home.html",
-				  controller: "home_controller"
-				  /*resolve: {
+				  controller: "home_controller",
+				  resolve: {
 					  load: function($q, $cookieStore){
 						  var deferred = $q.defer();
 						  if ($cookieStore.get('auth')){
@@ -38,7 +38,7 @@
 						  }
 						  return deferred.promise;
 					  }
-				  }	*/			
+				  }				
 			  })
 			  .state('contact', {
 				  url: "/contact",
@@ -64,6 +64,22 @@
 			  	url:"/imagemanager",
 			  	templateUrl: "imageUpload.html",
 			  	controller: "image_controller",
+			  	resolve: {
+					  load: function($q, $cookieStore){
+						  var deferred = $q.defer();
+						  if ($cookieStore.get('auth')){
+							  deferred.resolve();
+						  } else {
+							  deferred.reject();
+						  }
+						  return deferred.promise;
+					  }
+				  }
+			  })
+			  .state('user', {
+			  	url:"/usermanager",
+			  	templateUrl: "users.html",
+			  	controller: "user_controller",
 			  	resolve: {
 					  load: function($q, $cookieStore){
 						  var deferred = $q.defer();

@@ -4,7 +4,7 @@
   "description": "Simple CMS for creative types",
   "main": "server.js",
   "scripts": {
-    "test": "gulp watch",
+    "test": "gulp start",
     "prestart": "./mongod --fork --logpath /data/nul || mongod --fork --logpath /dev/nul",
     "start": "node server.js",
     "poststop": "mongo admin --eval 'db.shutdownServer()' > /data/null || mongo admin --eval 'db.shutdownServer()' > /dev/null"

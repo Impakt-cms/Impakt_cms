@@ -15,7 +15,7 @@ gulp.task('build', function () {
 		.pipe(gulp.dest('public/admin/js'))
 })
 
-gulp.task('start', function () {
+gulp.task('start', ['watch'], function () {
 	nodemon({
 		script: 'server.js'
 		, ext: 'js html'
@@ -29,6 +29,7 @@ gulp.task('browser-sync', function() {
     });
 })
 
-gulp.task('watch', ['start', 'browser-sync'], function () {
-	gulp.watch('public/admin/**/*.js', ['build'])
+gulp.task('watch', ['browser-sync'], function () {
+	gulp.watch('public/admin/**/*.js', ['build']);
+	gulp.watch('public/admin/css/*.css').on('change', browserSync.reload);
 })

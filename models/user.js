@@ -16,11 +16,9 @@ var UserSchema = mongoose.Schema({
 	}
 });
 
-
 var User = module.exports = mongoose.model('User', UserSchema);
 
-
-
+//-------------USER METHODS START HERE--------------//
 
 //Register User
 module.exports.createUser = function(newUser, callback){
@@ -39,25 +37,22 @@ module.exports.createUser = function(newUser, callback){
 }
 //Ensure user is logged in
 module.exports.isAuthenticated = function(req, res, next) {
-            console.log('Calling: isAuthenticated.....');
-            if (req.isAuthenticated()) {
-                return next();
-            } else {
-                return res.sendStatus(401);
-            }
-           	
+	console.log('Calling: isAuthenticated.....');
+	if (req.isAuthenticated()) {
+		return next();
+	} else {
+		return res.sendStatus(401);
+	}    	
 }
+//Check for Admin Rights
 module.exports.isAdmin = function(req, res, next) {
-            console.log('Calling: isAdmin.....');
-            if (req.isAuthenticated() && user.role == "admin" ){
-                return next();
-            } else {
-                return res.sendStatus(401);
-            }
+	console.log('Calling: isAdmin.....');
+	if (req.isAuthenticated() && user.role == "admin" ){
+		return next();
+	} else {
+		return res.sendStatus(401);
+	}
 }
-
-
-
 //Find User by Username
 module.exports.getUserByUsername = function(username, callback){
 	console.log("QUERY: USERNAME = " + username);
@@ -68,7 +63,6 @@ module.exports.getUserByUsername = function(username, callback){
 module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
-
 //Compare user password with password given.
 module.exports.comparePassword = function(candidate, hash, callback){
 	bcrypt.compare(candidate, hash, function(err, isMatch){
@@ -76,3 +70,5 @@ module.exports.comparePassword = function(candidate, hash, callback){
 		callback(null, isMatch);
 	});
 }
+
+//--------------USER METHODS END HERE-----------//

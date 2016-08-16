@@ -1,8 +1,8 @@
 (function () {
     'use strict';
     
-//this is where the home-route will go
-angular.module('app', [
+	//Declare module dependencies.
+	angular.module('app', [
 		'ui.router',
 		'ui.bootstrap',
 		'angularMoment',
@@ -10,5 +10,5 @@ angular.module('app', [
 		'ngFileUpload'
 	]);
 	
-	//Routes defined in router.js
+	//View routes defined in router.js
 })();

@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
+var bcrypt = require('bcryptjs');
 var User = require('../models/user'); //Current model for testing passport.
 
 
@@ -44,19 +44,21 @@ router.route('/display/:user_id',User.isAuthenticated)
 
 
 .put(function(req,res){
-
+console.log("Put has been received");
 User.findById(req.params.user_id, function(err, user){
 
 		if (err){
+			console.log(err);
 			res.send(err);
 		}
 
-		user.username=req.body.name;
-	
+		user.username = req.body.username;
+		user.role = req.body.role;
+		
 		bcrypt.genSalt(10, function(err, salt) {
 	    bcrypt.hash(user.password, salt, function(err, hash) {
 	        user.password = hash;
-	        user.save(function(err){
+	        user.update(function(err){
 	        	if(err){
 	        		res.json({'error':err})
 	        	}
@@ -69,11 +71,16 @@ User.findById(req.params.user_id, function(err, user){
 })
 
 .delete(function(req,res){
-User.findById(req.params.user_id, function(err, user){
-		if(err){
-			res.send(err);
-		}
 
+User.findById(req.params.user_id, function(err, user){
+	console.log("made it inside the findById")
+		if(err){
+			res.json({message:'Delete has an: '+err});
+		}
+		if(req.user.user_id == req.params.user_id){
+			res.json({message:'You cannot delete yourself'});
+		}
+		if(req.user.user_id == req.params.user_id){
 			User.remove({
 			_id:req.params.user_id
 			}, function(err, user){
@@ -83,11 +90,11 @@ User.findById(req.params.user_id, function(err, user){
 
 			console.log("User was removed successfully");
 		})
-		res.json({'message':'User has been deleted'})
-})
+		res.json({message:'User has been deleted'})
+		}			
 
 
-})
+})});
 
 
 // REGISTER METHOD
@@ -128,7 +135,7 @@ router.post('/register', function(req, res){
 				});
 				return res.status(200).send({message: "USER CREATION SUCCESS!"});
 			}
-		});
+		})
 	}
 });
 

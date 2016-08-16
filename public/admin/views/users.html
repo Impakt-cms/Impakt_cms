@@ -1,6 +1,7 @@
 <div class="" ng-repeat="user in users">
 <ul class="box">
 <li>{{user.username}}</li>
-<button class="btn btn-primary" id="{{user._id}}" data-ng-click="delete($event)">Delete Image</button>
+<li>{{user.role}}</li>
+<button class="btn btn-primary" id="{{user._id}}" data-ng-click="delete($event)">Delete User</button>
 </ul>
 </div>

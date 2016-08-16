@@ -8,11 +8,19 @@ var UserSchema = mongoose.Schema({
 	},
 	password: {
 		type: String
+	},
+	role: {
+		type: String,
+		required:true,
+		default: "contributor"
 	}
 });
 
 
 var User = module.exports = mongoose.model('User', UserSchema);
+
+
+
 
 //Register User
 module.exports.createUser = function(newUser, callback){
@@ -39,6 +47,16 @@ module.exports.isAuthenticated = function(req, res, next) {
             }
            	
 }
+module.exports.isAdmin = function(req, res, next) {
+            console.log('Calling: isAdmin.....');
+            if (req.isAuthenticated() && user.role == "admin" ){
+                return next();
+            } else {
+                return res.sendStatus(401);
+            }
+}
+
+
 
 //Find User by Username
 module.exports.getUserByUsername = function(username, callback){

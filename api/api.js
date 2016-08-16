@@ -19,6 +19,18 @@ router.get('/', function(req, res) {
 //Image file paths will be saved to the database and iterated over
 //Via the front end (angular)
 
+router.get('/categories', function(req,res,next){
+	Image.find().distinct('category',function(err,categories){
+			if(err){
+				res.json({message:'the following error occurred: '+err});
+			}
+
+			res.json(categories);
+
+	})
+
+
+})
 
 // Create, List for images collection
 router.route('/images')

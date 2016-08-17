@@ -12,7 +12,7 @@
 				$scope.users = data;
 			});
 
-
+			
 			$scope.delete= function(event){
 				$http.delete('/users/display/'+event.target.id)
 					.success(function(res){

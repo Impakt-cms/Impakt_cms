@@ -47,7 +47,8 @@ module.exports.isAuthenticated = function(req, res, next) {
 //Check for Admin Rights
 module.exports.isAdmin = function(req, res, next) {
 	console.log('Calling: isAdmin.....');
-	if (req.isAuthenticated() && user.role == "admin" ){
+	console.log(req.user.role);
+	if (req.user.role === "admin" ){
 		return next();
 	} else {
 		return res.sendStatus(401);

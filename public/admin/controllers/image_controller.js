@@ -42,6 +42,7 @@
 			};
 			
 			function getCategories(){
+				
 				$scope.categories = [];
 				$scope.categories[0] = $scope.selCat = "General";
 				angular.forEach($scope.images, function (image){
@@ -64,6 +65,9 @@
                 return deferred.promise;
 			}
 			
+
+
+
 			function getImages(){
 				getPromiseImages().then(function(data){
 					$scope.images = data;

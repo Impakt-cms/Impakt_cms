@@ -8,8 +8,8 @@ var User = require('../models/user');
 //---------CRUD FOR USERS ROUTE STARTS HERE---------//
 
 //DISPLAY USERS
-router.route('/',User.isAuthenticated)
-	.get(function(req,res){
+router.route('/')
+	.get(User.isAdmin,function(req,res){
 		console.log("Successfully loaded");
 		User.find(function(err, users){
 
@@ -23,9 +23,9 @@ router.route('/',User.isAuthenticated)
 	});
 
 
-router.route('/display/:user_id',User.isAuthenticated)
+router.route('/display/:user_id')
 	//Display User
-	.get(function(req,res){
+	.get(User.isAdmin,function(req,res){
 		User.findById(req.params.user_id, function(err, user){
 			if(err){
 				res.send(err);
@@ -37,7 +37,7 @@ router.route('/display/:user_id',User.isAuthenticated)
 		});
 	})
 	//Update User
-	.put(function(req,res){
+	.put(User.isAdmin,function(req,res){
 		console.log("Put has been received");
 		User.findById(req.params.user_id, function(err, user){
 

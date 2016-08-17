@@ -64,7 +64,7 @@ router.route('/display/:user_id',User.isAuthenticated)
 		});
 	})
 	//Delete User
-	.delete(function(req,res){
+	.delete(User.notDeletedUser,function(req,res){
 		User.findById(req.params.user_id, function(err, user){
 			console.log("made it inside the findById");
 			
@@ -72,12 +72,8 @@ router.route('/display/:user_id',User.isAuthenticated)
 				res.json({message:'Delete has an: '+err});
 			}
 			
-			if(req.user.user_id == req.params.user_id){
-				res.json({message:'You cannot delete yourself'});
-			}
 			
-			if(req.user.user_id == req.params.user_id){
-				User.remove({
+			User.remove({
 					_id:req.params.user_id
 				}, function(err, user){
 					if(err){
@@ -87,7 +83,7 @@ router.route('/display/:user_id',User.isAuthenticated)
 					console.log("User was removed successfully");
 				});
 				res.json({message:'User has been deleted'})
-			}			
+						
 		});
 	});
 //---------CRUD FOR USERS ROUTE ENDS HERE---------//
@@ -190,7 +186,7 @@ router.post('/login', function(req, res, next){
 			console.log("LOGIN SUCCESS!");
 			return res.json(user);
 		});
-	})(req, res, next);
+	},{session:true})(req, res, next);
 });
 
 //LOGOUT METHOD	

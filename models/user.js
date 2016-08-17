@@ -71,4 +71,23 @@ module.exports.comparePassword = function(candidate, hash, callback){
 	});
 }
 
+module.exports.notDeletedUser = function(req,res,next){
+	console.log(req.user);
+	console.log("checking if user is the same user being deleted")
+	if(req.user._id	== req.params.user_id){
+				console.log("fuck you, no");
+				return res.json({message:'You cannot delete yourself'});
+				
+			}
+			
+	if(req.user._id != req.params.user_id){
+				
+
+					console.log("User was removed successfully");
+					next();
+	};
+
+			
+}
+
 //--------------USER METHODS END HERE-----------//

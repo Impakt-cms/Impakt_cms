@@ -7,7 +7,8 @@
 		'ui.bootstrap',
 		'angularMoment',
 		'ngCookies',
-		'ngFileUpload'
+		'ngFileUpload',
+		'ngMaterial'
 	])
 	//Get scope variable based of logged in status.
 	.run(function($rootScope, $cookieStore){

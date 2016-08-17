@@ -19,8 +19,9 @@ var mongo = require('mongodb');
 var mongoose = require('mongoose');
 var db = require('./data/db');
 var multiparty = require('connect-multiparty');
-
+var User = require('./models/user');
 var users = require('./api/users');
+var booking = require('./models/booking');
 
 var app = express();
 
@@ -35,6 +36,29 @@ process.on('uncaughtException', function (err) {
   console.log('Caught exception: ' + err);
 });
 
+
+User.getUserByUsername("sysadmin", function(err,user,next){
+  if(err){
+    throw err;
+  }
+
+  if(!user){
+    var newUser = new User({
+          username: "sysadmin",
+          password: "welcome1",
+          role: "admin"
+    });
+
+    User.createUser(newUser, function(err, user){
+          if (err) throw err;
+          console.log("sysadmin has been auto generated, refer to docs");
+        });
+  }
+  if(user){
+    console.log("Sys admin already exists");
+  }
+
+})
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
@@ -79,7 +103,8 @@ app.use(function (req, res, next) {
 });
 
 
-app.use('/users', users);
+app.use('users', users);
+app.use('/api/booking', booking);
 
 var port = process.env.PORT || 8080;        // set our port
 

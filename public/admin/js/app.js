@@ -1,14 +1,19 @@
 (function () {
     'use strict';
     
-//this is where the home-route will go
-angular.module('app', [
+	//Declare module dependencies.
+	angular.module('app', [
 		'ui.router',
 		'ui.bootstrap',
 		'angularMoment',
 		'ngCookies',
-		'ngFileUpload'
-	]);
+		'ngFileUpload',
+		'ngMaterial'
+	])
+	//Get scope variable based of logged in status.
+	.run(function($rootScope, $cookieStore){
+		$rootScope.auth = $cookieStore.get('auth');
+	});
 	
-	//Routes defined in router.js
+	//View routes defined in router.js
 })();

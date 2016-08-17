@@ -8,11 +8,17 @@ var UserSchema = mongoose.Schema({
 	},
 	password: {
 		type: String
+	},
+	role: {
+		type: String,
+		required:true,
+		default: "none"
 	}
 });
 
-
 var User = module.exports = mongoose.model('User', UserSchema);
+
+//-------------USER METHODS START HERE--------------//
 
 //Register User
 module.exports.createUser = function(newUser, callback){
@@ -31,13 +37,23 @@ module.exports.createUser = function(newUser, callback){
 }
 //Ensure user is logged in
 module.exports.isAuthenticated = function(req, res, next) {
-            console.log('Calling: isAuthenticated.....');
-            if (req.isAuthenticated()) {
-                return next();
-            } else {
-                return res.sendStatus(401);
-            }
-           	
+
+	console.log('Calling: isAuthenticated.....');
+	if (req.isAuthenticated() && (req.user.role == 'collaborator' || req.user.role == 'admin')) {
+		return next();
+	} else {
+		return res.sendStatus(401);
+	}  	
+}
+//Check for Admin Rights
+module.exports.isAdmin = function(req, res, next) {
+	console.log('Calling: isAdmin.....');
+	console.log(req.user.role);
+	if (req.user.role === "admin" ){
+		return next();
+	} else {
+		return res.sendStatus(401);
+	}
 }
 
 //Find User by Username
@@ -50,7 +66,6 @@ module.exports.getUserByUsername = function(username, callback){
 module.exports.getUserById = function(id, callback){
 	User.findById(id, callback);
 }
-
 //Compare user password with password given.
 module.exports.comparePassword = function(candidate, hash, callback){
 	bcrypt.compare(candidate, hash, function(err, isMatch){
@@ -58,3 +73,25 @@ module.exports.comparePassword = function(candidate, hash, callback){
 		callback(null, isMatch);
 	});
 }
+
+module.exports.notDeletedUser = function(req,res,next){
+	console.log(req.user);
+	console.log("checking if user is the same user being deleted")
+	if(req.user._id	== req.params.user_id){
+				console.log("fuck you, no");
+				return res.json({message:'You cannot delete yourself'});
+				
+			}
+			
+	if(req.user._id != req.params.user_id){
+				
+
+					console.log("User was removed successfully");
+					next();
+	};
+
+			
+}
+
+//--------------USER METHODS END HERE-----------//
+

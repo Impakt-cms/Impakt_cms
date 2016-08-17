@@ -1,6 +1,15 @@
-<div class="" ng-repeat="user in users">
-<ul class="box">
-<li>{{user.username}}</li>
-<button class="btn btn-primary" id="{{user._id}}" data-ng-click="delete($event)">Delete Image</button>
-</ul>
-</div>
+
+<md-list layout="row" layout-align="center">
+	<md-button class="md-primary md-raised userDetails">Username <i class="glyphicon glyphicon-sort"></i></md-button>
+	<md-button class="md-primary md-raised userDetails">Role <i class="glyphicon glyphicon-sort"></i></md-button>
+	<md-button class="md-primary md-raised userDetails">Delete</md-button>
+</md-list>
+<md-list layout="row" layout-align="center" ng-repeat="user in users">
+	<md-card class="userDetails">
+		<md-list-item layout-align="center center">{{user.username}}</md-list-item>
+	</md-card>
+	<md-card class="userDetails">
+		<md-list-item layout-align="center center">{{user.role}}</md-list-item>
+	</md-card>
+	<md-button class="md-warn md-raised userDetails" id="{{user._id}}" data-ng-click="delete($event)">Delete User</md-button>
+</md-list>

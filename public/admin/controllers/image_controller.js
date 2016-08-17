@@ -42,8 +42,9 @@
 			};
 			
 			function getCategories(){
+				
 				$scope.categories = [];
-				$scope.categories[0] = $scope.selCat = "Default";
+				$scope.categories[0] = $scope.selCat = "General";
 				angular.forEach($scope.images, function (image){
 					if (image.category && $scope.categories.indexOf(image.category) < 0){
 						$scope.categories.push(image.category);
@@ -64,6 +65,9 @@
                 return deferred.promise;
 			}
 			
+
+
+
 			function getImages(){
 				getPromiseImages().then(function(data){
 					$scope.images = data;

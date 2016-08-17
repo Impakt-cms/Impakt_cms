@@ -2,92 +2,91 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
+var bcrypt = require('bcryptjs');
+var User = require('../models/user'); 
 
-var User = require('../models/user'); //Current model for testing passport.
-
-
-
-//CRUD FOR USERS ROUTE
-
+//---------CRUD FOR USERS ROUTE STARTS HERE---------//
 
 //DISPLAY USERS
-router.route('/',User.isAuthenticated)
-.get(function(req,res){
-	console.log("Successfully loaded");
-	User.find(function(err, users){
+router.route('/')
+	.get(User.isAdmin,function(req,res){
+		console.log("Successfully loaded");
+		User.find(function(err, users){
 
-		if(err){
-			res.json({'Error':err})
-		}
-		console.log("successfully found users");
-		res.json(users)
-	})
-
-})
-
-
-//UPDATE AND DELETE USERS
-
-router.route('/display/:user_id',User.isAuthenticated)
-.get(function(req,res){
-	User.findById(req.params.user_id, function(err, user){
-		if(err){
-			res.send(err);
-		}
-
-		console.log(user.username)
-		
-		res.json(user);
-	})
-})
-
-
-
-.put(function(req,res){
-
-User.findById(req.params.user_id, function(err, user){
-
-		if (err){
-			res.send(err);
-		}
-
-		user.username=req.body.name;
-	
-		bcrypt.genSalt(10, function(err, salt) {
-	    bcrypt.hash(user.password, salt, function(err, hash) {
-	        user.password = hash;
-	        user.save(function(err){
-	        	if(err){
-	        		res.json({'error':err})
-	        	}
-
-	        console.log("User has been updated")
-	        });
-	    });
-	});
-	})
-})
-
-.delete(function(req,res){
-User.findById(req.params.user_id, function(err, user){
-		if(err){
-			res.send(err);
-		}
-
-			User.remove({
-			_id:req.params.user_id
-			}, function(err, user){
 			if(err){
-			res.send(err);
+				res.json({'Error':err})
+			}
+			console.log("successfully found users");
+			res.json(users)
+		});
+
+	});
+
+
+router.route('/display/:user_id')
+	//Display User
+	.get(User.isAdmin,function(req,res){
+		User.findById(req.params.user_id, function(err, user){
+			if(err){
+				res.send(err);
 			}
 
-			console.log("User was removed successfully");
-		})
-		res.json({'message':'User has been deleted'})
-})
+			console.log("Displaying " + user.username);
+			
+			res.json(user);
+		});
+	})
+	//Update User
+	.put(User.isAdmin,function(req,res){
+		console.log("Put has been received");
+		User.findById(req.params.user_id, function(err, user){
 
+			if (err){
+				console.log(err);
+				res.send(err);
+			}
 
-})
+			user.username = req.body.username;
+			user.role = req.body.role;
+			
+			bcrypt.genSalt(10, function(err, salt) {
+				bcrypt.hash(user.password, salt, function(err, hash) {
+					user.password = hash;
+					user.update(function(err){
+						if(err){
+							res.json({'error':err})
+						}
+
+						console.log("User has been updated")
+					});
+				});
+			});
+		});
+	})
+	//Delete User
+	.delete(User.notDeletedUser,function(req,res){
+		User.findById(req.params.user_id, function(err, user){
+			console.log("made it inside the findById");
+			
+			if(err){
+				res.json({message:'Delete has an: '+err});
+			}
+			
+			
+			User.remove({
+					_id:req.params.user_id
+				}, function(err, user){
+					if(err){
+						res.send(err);
+					}
+
+					console.log("User was removed successfully");
+				});
+				res.json({message:'User has been deleted'})
+						
+		});
+	});
+//---------CRUD FOR USERS ROUTE ENDS HERE---------//
 
 
 // REGISTER METHOD
@@ -187,7 +186,7 @@ router.post('/login', function(req, res, next){
 			console.log("LOGIN SUCCESS!");
 			return res.json(user);
 		});
-	})(req, res, next);
+	},{session:true})(req, res, next);
 });
 
 //LOGOUT METHOD	

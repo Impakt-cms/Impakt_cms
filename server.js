@@ -21,6 +21,7 @@ var db = require('./data/db');
 var multiparty = require('connect-multiparty');
 var User = require('./models/user');
 var users = require('./api/users');
+var booking = require('./models/booking');
 
 var app = express();
 
@@ -102,7 +103,8 @@ app.use(function (req, res, next) {
 });
 
 
-app.use('/users', users);
+app.use('users', users);
+app.use('/api/booking', booking);
 
 var port = process.env.PORT || 8080;        // set our port
 

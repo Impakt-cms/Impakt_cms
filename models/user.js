@@ -12,7 +12,7 @@ var UserSchema = mongoose.Schema({
 	role: {
 		type: String,
 		required:true,
-		default: "contributor"
+		default: "none"
 	}
 });
 
@@ -38,11 +38,11 @@ module.exports.createUser = function(newUser, callback){
 //Ensure user is logged in
 module.exports.isAuthenticated = function(req, res, next) {
 	console.log('Calling: isAuthenticated.....');
-	if (req.isAuthenticated()) {
+	if (req.isAuthenticated() && (req.user.role == 'collaborator' || req.user.role == 'admin')) {
 		return next();
 	} else {
 		return res.sendStatus(401);
-	}    	
+	}  	
 }
 //Check for Admin Rights
 module.exports.isAdmin = function(req, res, next) {

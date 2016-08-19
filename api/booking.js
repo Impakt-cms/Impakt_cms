@@ -6,8 +6,8 @@ var auth = require('../models/user');
 
 //DISPLAY USERS
 router.route('/')
-	.get(auth.isAuthenticated(),function(req,res){
-		console.log("Successfully loaded");
+	.get(function(req,res){
+		console.log("Successfully loaded booking");
 		Booking.find(function(err, booking){
 
 			if(err){
@@ -44,7 +44,7 @@ router.route('/')
 	});
 
 
-router.route('/booking/:booking_id', auth.isAuthenticated())
+router.route('/:booking_id')
 	//Display Booking
 	.get(function(req,res){
 		Booking.findById(req.params.booking_id, function(err, booking){
@@ -76,7 +76,7 @@ router.route('/booking/:booking_id', auth.isAuthenticated())
 			booking.Approved = req.body.Approved;
 			booking.ApprovedBy = req.user._id;
 			
-			
+			booking.save();
 		});
 	})
 	//Delete Booking

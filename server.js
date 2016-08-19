@@ -21,8 +21,8 @@ var db = require('./data/db');
 var multiparty = require('connect-multiparty');
 var User = require('./models/user');
 var users = require('./api/users');
-var booking = require('./models/booking');
-
+var booking = require('./api/booking');
+var Booking = require('./models/booking');
 var app = express();
 
 app.use(timeout(120000));
@@ -35,6 +35,40 @@ function haltOnTimedout(req, res, next){
 process.on('uncaughtException', function (err) {
   console.log('Caught exception: ' + err);
 });
+
+Booking.find({bookingSubmitter:'sysadmin'}, function(err,booking,next){
+  if(err){
+    console.log(err);
+  }
+  var date = new Date();
+  if(!booking){
+    var newbooking = new Booking({
+      bookingSubmitter: 'sysadmin',
+      Email:'sysadmin@example.com',
+      submittedDate: date,
+      StartDate: date,
+      EndDate: date+1,
+      Time: '16:00',
+      Approved:false,
+      ApprovedBy: ''
+      
+    })
+    newbooking.save(function(err,booking){
+      if(err){
+        console.log(err.toString());
+      }
+      console.log('booking successfully saved to mongodb');
+      
+    });
+    
+    if(booking){
+      console.log('booking seed already exists');
+    }
+    
+    console.log('successfully added booking insert');
+  }
+  
+})
 
 
 User.getUserByUsername("sysadmin", function(err,user,next){

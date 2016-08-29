@@ -4,12 +4,43 @@ var Booking = require('../models/booking');
 var auth = require('../models/user');
 //---------CRUD FOR USERS ROUTE STARTS HERE---------//
 
+
+
+Booking.findOne({bookingSubmitter:'sysadmin'}, function(err,res){
+          if(err){
+          var newbooking = new Booking()
+
+
+          newbooking.bookingSubmitter = 'sysadmin';
+          newbooking.Email = 'sysadmin@admin.com';
+          newbooking.submittedDate = new Date();
+          newbooking.StartDate = Math.abs(new Date()+30);
+          newbooking.EndDate = Math.abs(new Date()+32);
+          newbooking.Time = '16:30';
+          newbooking.Approved = false;
+          newbooking.ApprovedBy= '';
+
+          newbooking.save(function(err,result){
+            if(err){
+              console.log('there was an err:' + err)
+            }
+            console.log('Newbooking was saved!!' + result)
+          })
+        }
+        else{
+          console.log("Booking already exists!");
+
+        }
+      });
+
+
 //DISPLAY USERS
 router.route('/')
-	.get(auth.isAuthenticated(),function(req,res){
+	.get(function(req,res){
+
 		console.log("Successfully loaded");
 		Booking.find(function(err, booking){
-
+			console.log('inside of booking find')
 			if(err){
 				res.json({'Error':err})
 			}
@@ -44,7 +75,7 @@ router.route('/')
 	});
 
 
-router.route('/booking/:booking_id', auth.isAuthenticated())
+router.route('/:booking_id')
 	//Display Booking
 	.get(function(req,res){
 		Booking.findById(req.params.booking_id, function(err, booking){

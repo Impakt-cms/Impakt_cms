@@ -21,7 +21,8 @@ var db = require('./data/db');
 var multiparty = require('connect-multiparty');
 var User = require('./models/user');
 var users = require('./api/users');
-var booking = require('./models/booking');
+var booking = require('./api/booking');
+var Booking = require('./models/booking');
 
 var app = express();
 
@@ -35,6 +36,7 @@ function haltOnTimedout(req, res, next){
 process.on('uncaughtException', function (err) {
   console.log('Caught exception: ' + err);
 });
+
 
 
 User.getUserByUsername("sysadmin", function(err,user,next){

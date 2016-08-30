@@ -4,7 +4,7 @@
 	<md-button class="md-primary md-raised userDetails">Role <i class="glyphicon glyphicon-sort"></i></md-button>
 	<md-button class="md-primary md-raised userDetails">Delete</md-button>
 </md-list>
-<md-list layout="row" layout-align="center" ng-repeat="user in users">
+<md-list layout="row" layout-align="center" ng-repeat="user in users track by $index">
 	<md-card class="userDetails">
 		<md-list-item layout-align="center center">{{user.username}}</md-list-item>
 	</md-card>

@@ -5,7 +5,9 @@ var Schema = mongoose.Schema;
 var imageSchema = new Schema({
   name: {type:String,required:true},
   file_path:{type:String, required:true},
+
   category: {type:String, default: "General"},
+
   author: String,
   meta: {
     Title: String
@@ -20,4 +22,6 @@ var imageSchema = new Schema({
 var Image = mongoose.model('Image', imageSchema);
 
 // make this available to our users in our Node applications
+
 module.exports = Image;
+

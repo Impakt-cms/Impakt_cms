@@ -12,11 +12,13 @@ var auth = require('../models/user');
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
     res.json({ message: 'This is the images crud api' });
+
 });
 
 //Images will be saved to the server via fs.readsync
 //Image file paths will be saved to the database and iterated over
 //Via the front end (angular)
+
 
 router.get('/categories', function(req,res,next){
 	Image.find().distinct('category',function(err,categories){
@@ -27,9 +29,9 @@ router.get('/categories', function(req,res,next){
 	});
 });
 
+
 // Create, List for images collection
 router.route('/images')
-
 	.post(auth.isAuthenticated,multipartymiddleware,
 		function(req,res,next){
 			UserController.uploadFile;
@@ -90,8 +92,10 @@ router.route('/images')
 		});
 	});
 
+
 //Find by ID, singular requests
 router.route('/images/:image_id')
+
 
 	.get(function(req,res){
 		Image.findById(req.params.image_id, function(err, image){
@@ -161,3 +165,4 @@ router.route('/images/:image_id')
 
 module.exports = router;
 	
+

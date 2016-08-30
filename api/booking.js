@@ -7,9 +7,8 @@ var auth = require('../models/user');
 //DISPLAY USERS
 router.route('/')
 	.get(function(req,res){
-		console.log("Successfully loaded booking");
 		Booking.find(function(err, booking){
-
+			console.log('inside of booking find')
 			if(err){
 				res.json({'Error':err})
 			}

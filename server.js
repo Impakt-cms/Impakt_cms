@@ -155,6 +155,7 @@ app.use('/js', express.static(__dirname + '/public/admin/js'));
 app.use('/css', express.static(__dirname + '/public/admin/css'));
 app.use('/controllers', express.static(__dirname + '/public/admin/controllers'));
 app.use('/directives', express.static(__dirname + '/public/admin/directives'));
+app.use('/services', express.static(__dirname + '/public/admin/services'));
 
 
 //Fetching 404 as default if others fall through.

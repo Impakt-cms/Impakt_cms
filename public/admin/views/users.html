@@ -8,8 +8,21 @@
 	<md-card class="userDetails">
 		<md-list-item layout-align="center center">{{user.username}}</md-list-item>
 	</md-card>
-	<md-card class="userDetails">
-		<md-list-item layout-align="center center">{{user.role}}</md-list-item>
-	</md-card>
+	<md-menu class="userDetails">
+		<md-card class="roleMenu" ng-click="openMenu($mdOpenMenu, $event)">
+			<md-list-item layout-align="center center">{{user.role}}</md-list-item>
+		</md-card>
+		<md-menu-content>
+			<md-menu-item>
+				<md-button ng-click="setRole(user, 'contributor')">Contributor</md-button>
+			</md-menu-item>
+			<md-menu-item>
+				<md-button ng-click="setRole(user, 'admin')">Administrator</md-button>
+			</md-menu-item>
+			<md-menu-item>
+				<md-button ng-click="setRole(user, 'none')">None</md-button>
+			</md-menu-item>
+		</md-menu-content>
+	</md-menu>
 	<md-button class="md-warn md-raised userDetails" id="{{user._id}}" data-ng-click="delete($event)">Delete User</md-button>
 </md-list>

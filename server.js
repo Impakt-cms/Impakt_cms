@@ -4,7 +4,7 @@
 // =============================================================================
 
 // call the packages we need
-var express    = require('express');        // call express             
+var express    = require('express');        // call express
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var api_routes =  require('./api/api')
@@ -51,23 +51,23 @@ Booking.find({bookingSubmitter:'sysadmin'}, function(err,booking,next){
       Time: '16:00',
       Approved:false,
       ApprovedBy: ''
-      
+
     })
     newbooking.save(function(err,booking){
       if(err){
         console.log(err.toString());
       }
       console.log('booking successfully saved to mongodb');
-      
+
     });
-    
+
     if(booking){
       console.log('booking seed already exists');
     }
-    
+
     console.log('successfully added booking insert');
   }
-  
+
 })
 
 
@@ -137,7 +137,7 @@ app.use(function (req, res, next) {
 });
 
 
-app.use('users', users);
+app.use('/users', users);
 app.use('/api/booking', booking);
 
 var port = process.env.PORT || 8080;        // set our port

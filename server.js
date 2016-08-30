@@ -71,6 +71,7 @@ Booking.find({bookingSubmitter:'sysadmin'}, function(err,booking,next){
 })
 
 
+
 User.getUserByUsername("sysadmin", function(err,user,next){
   if(err){
     throw err;

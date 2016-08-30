@@ -37,6 +37,7 @@ module.exports.createUser = function(newUser, callback){
 }
 //Ensure user is logged in
 module.exports.isAuthenticated = function(req, res, next) {
+
 	console.log('Calling: isAuthenticated.....');
 	if (req.isAuthenticated() && (req.user.role == 'collaborator' || req.user.role == 'admin')) {
 		return next();
@@ -54,6 +55,7 @@ module.exports.isAdmin = function(req, res, next) {
 		return res.sendStatus(401);
 	}
 }
+
 //Find User by Username
 module.exports.getUserByUsername = function(username, callback){
 	console.log("QUERY: USERNAME = " + username);
@@ -92,3 +94,4 @@ module.exports.notDeletedUser = function(req,res,next){
 }
 
 //--------------USER METHODS END HERE-----------//
+

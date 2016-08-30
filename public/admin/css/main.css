@@ -16,6 +16,9 @@
 	background-color: #B2FAB2;
 }
 
+#pendingBooking, #currentBooking, #bookingCalendar {
+	margin: 10px 0px;
+	color: orange;
 .imgPreview {
 	width: 100%;
 	height: 240px;

@@ -1,6 +1,7 @@
 angular.module('app')
 	.directive('pendingBooking', function() {
 		return {
-			restrict: 'E'
+			restrict: 'E',
+			replace:true
   		};
 	});

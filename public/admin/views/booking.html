@@ -1,5 +1,12 @@
 <h1 class="text-center">This is the BOOKING page.</h1>
 
+
+<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> 
+		<!-- 		psudeocode:
+		google calendar-like view of approved bookings. will be customer facing in the future -->
+	</booking-calendar>
+
+
 <div id="pendingBooking">Pending Booking Requests</div>
 	<pending-booking>
 		<div>These are the Pending Bookings.</div>
@@ -18,7 +25,3 @@
 	<booking-calendar>
 		<div>This is the Booking Calendar.</div>
 		
-<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div> 
-		<!-- 		psudeocode:
-		google calendar-like view of approved bookings. will be customer facing in the future -->
-	</booking-calendar>

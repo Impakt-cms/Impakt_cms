@@ -12,8 +12,7 @@
     getBookings();
 
     $scope.newEvent={};
-
-
+    $scope.events=[];
 
     /* event source that pulls from google.com */
     $scope.eventSource = {
@@ -90,9 +89,28 @@
     /* event sources array*/
 
 
+    $scope.sources = $scope.events;
 
-    function newBooking(){
-      $http.post('/api/booking', $scope.newEvent)
+
+    $scope.newBooking= function(event){
+      
+      console.log(JSON.stringify(event));
+            console.log(JSON.stringify(event.Time));
+
+        var newEvent = {
+
+            title: event.bookingSubmitter,
+            start: event.StartDate,
+            end: event.EndDate,
+            time: event.Time,
+            approved: false,
+            approvedBy: 'none',
+            email: x.Email,
+            className: ['openSesame'],
+            submittedDate: date
+        }
+
+      $http.post('/api/booking', newEvent)
         .error(function(err){
           console.log(err);
         })  

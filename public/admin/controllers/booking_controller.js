@@ -3,13 +3,18 @@
 
     angular
         .module('app')
-        .controller('booking_controller', function booking_controller($scope,$compile,uiCalendarConfig) {
+        .controller('booking_controller', function booking_controller($scope,$http,$compile,uiCalendarConfig) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
     
-    $scope.changeTo = 'Hungarian';
+    getBookings();
+
+    $scope.newEvent={};
+
+
+
     /* event source that pulls from google.com */
     $scope.eventSource = {
             url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
@@ -17,6 +22,8 @@
             currentTimezone: 'America/Chicago' // an option!
     };
     /* event source that contains custom events on the scope */
+
+    
     $scope.events = [
       {title: 'All Day Event',start: new Date(y, m, 1)},
       {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
@@ -77,10 +84,7 @@
         className: ['openSesame']
       });
     };
-    /* remove event */
-    $scope.remove = function(index) {
-      $scope.events.splice(index,1);
-    };
+    
     /* Change View */
     $scope.changeView = function(view,calendar) {
       uiCalendarConfig.calendars[calendar].fullCalendar('changeView',view);
@@ -120,8 +124,43 @@
   
     };
     /* event sources array*/
-    $scope.eventSources = [$scope.events, $scope.eventSource, $scope.eventsF];
-    $scope.eventSources2 = [$scope.calEventsExt, $scope.eventsF, $scope.events];
-}
+
+
+
+    function newBooking(){
+      $http.post('/api/booking', $scope.newEvent)
+        .error(function(err){
+          console.log(err);
+        })  
+        .success(function(data){
+          console.log("success: "+data);
+        })
+
+    }
+
+
+    function getBookings(){
+
+      $http.get('/api/booking', function(data){
+        for(x in data){
+          $scope.events.push(
+          {
+            title: x.bookingSubmitter,
+            start: x.StartDate,
+            end: x.EndDate,
+            time: x.Time,
+            approved: x.Approved,
+            approvedBy: x.ApprovedBy,
+            email: x.Email,
+            submittedDate:x.submittedDate
+          }
+            );
+          }
+        }
+
+      )
+
+    }
+  }
 /* EOF */);
 })();

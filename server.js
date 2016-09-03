@@ -27,7 +27,6 @@ var app = express();
 
 app.use(timeout(120000));
 app.use(haltOnTimedout);
-
 function haltOnTimedout(req, res, next){
   if (!req.timedout) next();
 }
@@ -97,6 +96,7 @@ User.getUserByUsername("sysadmin", function(err,user,next){
 
 // configure app to use bodyParser()
 // this will let us get the data from a POST
+app.use(bodyParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());

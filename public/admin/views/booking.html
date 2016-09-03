@@ -32,25 +32,26 @@
 			<div class="modal fade" id="modal-1">
 				<div class="modal-dialog" role="document">
 					<form class="modal-content" ng-submit="newBooking(event)">
-						<div><div class="form-group">
+						<div>
+						<div class="form-group">
 							<label for="Name">Name</label>
-							<input type="name" ng-model="event.bookingSubmitter">
+							<input class="form-control" type="name" ng-model="event.bookingSubmitter">
 						</div>
 						<div class="form-group">
 							<label for="Email">Email</label>
-							<input type="email" value="james@james.com" ng-model="event.Email">
+							<input class="form-control" type="email" value="james@james.com" ng-model="event.Email">
 						</div>
 						<div class="form-group">
 							<label for="StartDate">Start Date</label>
-							<input type="text" value="2011-08-19" ng-model="event.StartDate">
+							<input class="form-control" type="text" value="2011-08-19" ng-model="event.StartDate">
 						</div>
 						<div class="form-group">
 							<label for="EndDate">End Date</label>
-							<input type="text" value="2011-08-20" ng-model="event.EndDate">
+							<input class="form-control" type="text" value="2011-08-20" ng-model="event.EndDate">
 						</div>
 						<div class="form-group">
 							<label for="Time">Time</label>
-							<input type="text" value="13:45:00" ng-model="event.Time">
+							<input class="form-control" type="text" value="13:45:00" ng-model="event.Time">
 						</div>
 						</div>
 						<div class="modal-footer">

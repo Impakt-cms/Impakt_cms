@@ -105,7 +105,7 @@
             time: event.Time,
             approved: false,
             approvedBy: 'none',
-            email: x.Email,
+            email: event.Email,
             className: ['openSesame'],
             submittedDate: date
         }

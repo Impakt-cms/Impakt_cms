@@ -20,7 +20,9 @@ router.route('/')
 	.post(function(req,res){
 		var date_time = new Date();
 		var booking = new Booking();
-	
+		console.log(req.headers['content-type'])
+		console.log(JSON.stringify(req.body));
+
 		booking.bookingSubmitter = req.body.bookingSubmitter;
 		booking.Email = req.body.Email;
 		booking.submittedDate = date_time;
@@ -28,15 +30,15 @@ router.route('/')
 		booking.EndDate = req.body.EndDate;
 		booking.Time = req.body.Time;
 		booking.Approved = req.body.Approved;
-		booking.ApprovedBy = req.user._id;
+		booking.ApprovedBy = req.body.ApprovedBy;
 		
-		
+		console.log(JSON.stringify(booking));
 		booking.save(function(err){
 			if(err){
 				res.json(err);
 			}
 			
-			res.json({message:'Booking has been received'});
+			console.log("success!!!");
 			
 		})
 		

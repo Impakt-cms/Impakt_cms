@@ -40,20 +40,21 @@
 					  }
 				  }				
 			  })
-			  .state('contact', {
-				  url: "/contact",
-				  templateUrl: "contact.html",
-				  controller: "contact_controller"
-			  })
 			  .state('booking', {
 				  url: "/booking",
 				  templateUrl: "booking.html",
-				  controller: "booking_controller"
-			  })
-			  .state('about', {
-				  url: "/about",
-				  templateUrl: "about.html",
-				  controller: "about_controller"
+				  controller: "booking_controller",
+				  resolve: {
+					  load: function($q, $cookieStore){
+						  var deferred = $q.defer();
+						  if ($cookieStore.get('auth')){
+							  deferred.resolve();
+						  } else {
+							  deferred.reject();
+						  }
+						  return deferred.promise;
+					  }
+				  }
 			  })
 			  .state('register', {
 				  url: "/register",

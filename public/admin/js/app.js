@@ -10,6 +10,7 @@
 		'ngFileUpload',
 		'ngMaterial',
 		'ui.calendar', 
+		'angular.filter',
 		'ui.bootstrap'
 	])
 	//Get scope variable based of logged in status.

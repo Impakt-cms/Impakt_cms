@@ -63,11 +63,34 @@
 	</md-grid-tile>
 </md-grid-list>
 
-<md-grid-list md-row-height="200px" md-gutter="20px" md-cols="12">
-	<md-grid-tile md-rowspan="1" md-colspan="2" ng-repeat="img in images">
-		<img class="thumb" style="height:inherit;"   src="{{img.name}}" width:"inherit"> 
-	</md-grid-tile>
-</md-grid-list>
+
+
+<div layout="column" ng-cloak>
+	<md-content class="md-padding">
+    <md-tabs md-selected="selectedIndex" md-border-bottom md-autoselect>
+      <md-tab ng-repeat="img in images|unique:'category'" label="{{img.category}}">
+        <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
+          <md-tab-body>
+          	<md-grid-list md-row-height="200px" md-gutter="20px" md-cols="12">
+			<md-grid-tile md-rowspan="1" md-colspan="2" ng-repeat="img in images | where:{category: img.category}">
+			<img class="thumb" style="height:inherit;"   src="{{img.name}}" width:"inherit"> 
+			</md-grid-tile>
+		</md-grid-list>
+
+          </md-tab-body>
+          <br/>
+        </div>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+	
+
+
+</div>
+
+
+
+
 
 <!--<div class="row">
 	<ul class="box">

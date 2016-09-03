@@ -15,8 +15,8 @@
 					
 				});
 			}
-
-
+			
+			
 			function getPromiseImages() {
 				var deferred = $q.defer();
 				$http.get('/api/images').then(

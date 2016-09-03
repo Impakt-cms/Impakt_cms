@@ -10,7 +10,7 @@ var imageSchema = new Schema({
 
   author: String,
   meta: {
-    Title: String
+    Title: {type:String, default:"NewImage"}
 	},
   created_at: {type:Date, required:true},
   updated_at: Date,

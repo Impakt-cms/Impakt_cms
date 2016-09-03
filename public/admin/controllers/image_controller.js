@@ -3,10 +3,44 @@
 
     angular
         .module('app')
-        .controller('image_controller', function image_controller($scope, $state, $http, $q, $log, $cookieStore, Upload) {
+        .controller('image_controller', function image_controller($scope, $state, $http, $q, $log, $cookieStore, Upload, $mdDialog) {
 			
 			getImages();
-			
+
+
+			$scope.customFullscreen = false;
+		$scope.showAdvanced = function(data,id,title) {
+			console.log(data);
+    		$mdDialog.show({
+    		scope:$scope,
+     		controller: ['$scope', 'data','id','title', function($scope, data,id,title) {
+     			console.log(title);
+            $scope.src = data;
+            $scope.id=id;
+            $scope.title=title;
+
+            $scope.cancel = function() {
+      		$mdDialog.cancel();
+   		 };
+            
+          }],
+      		templateUrl: 'img-popup.partial.html',
+      		parent: angular.element(document.body),
+      		targetEvent: data,
+      		locals:{
+      			data:data,
+      			id: id,
+      			title:title
+      		},
+      		clickOutsideToClose:true,
+      		fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+
+ 
+
+
+
 			$scope.delete= function(event){
 				$http.delete('/api/images/'+event.target.id)
 					.success(function(res){
@@ -73,7 +107,21 @@
 					$scope.images = data;
 					getCategories();
 				});
+
 			}
+
+
+			function DialogController($scope, $mdDialog) {
+    $scope.hide = function() {
+      $mdDialog.hide();
+    };
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+    $scope.answer = function(answer) {
+      $mdDialog.hide(answer);
+    };
+  }
 
         });
 })();

@@ -109,17 +109,18 @@ router.route('/images/:image_id')
 		})
 	})
 
-	.put(auth.isAuthenticated,function(req,res){
+	.put(function(req,res){
 		Image.findById(req.params.image_id, function(err, image){
 
 			if (err){
 				res.json(err);
 			}
 
-			image.name=req.body.name;
-		
-			image.file_path = req.file_path;
+			image.meta.Title = req.body.title;
 
+			image.updated_at = new Date(); 
+			image.category = req.body.category;
+			
 			image.save(function(err){
 				if(err){
 					res.json(err);

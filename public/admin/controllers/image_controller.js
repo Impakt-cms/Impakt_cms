@@ -6,21 +6,40 @@
         .controller('image_controller', function image_controller($scope, $state, $http, $q, $log, $cookieStore, Upload, $mdDialog) {
 			
 			getImages();
-
-
 			$scope.customFullscreen = false;
-		$scope.showAdvanced = function(data,id,title) {
+
+
+		$scope.showAdvanced = function(data,id,title,cat) {
 			console.log(data);
     		$mdDialog.show({
-    		scope:$scope,
-     		controller: ['$scope', 'data','id','title', function($scope, data,id,title) {
+     		controller: ['$scope', 'data','id','title','cat','$mdDialog', function($scope, data,id,title,cat,$mdDialog) {
      			console.log(title);
             $scope.src = data;
             $scope.id=id;
             $scope.title=title;
+            $scope.category=cat;
+
+            $scope.update = function(id){
+            	var url ='/api/images/'+id;
+
+            	var data = {
+            		title:$scope.title,
+            		category:$scope.category
+            	}
+
+            	$http.put(url,data)
+            	.then(function(){
+            		console.log("Succesfully updated an image");
+            	})
+            	
+            	$mdDialog.hide()
+            	
+
+            }
 
             $scope.cancel = function() {
-      		$mdDialog.cancel();
+      		$mdDialog.hide();
+      		console.log("closed");
    		 };
             
           }],
@@ -30,11 +49,13 @@
       		locals:{
       			data:data,
       			id: id,
-      			title:title
+      			title:title,
+      			cat:cat
       		},
       		clickOutsideToClose:true,
       		fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     })
+
   };
 
  
@@ -101,7 +122,6 @@
 			
 
 
-
 			function getImages(){
 				getPromiseImages().then(function(data){
 					$scope.images = data;
@@ -110,18 +130,6 @@
 
 			}
 
-
-			function DialogController($scope, $mdDialog) {
-    $scope.hide = function() {
-      $mdDialog.hide();
-    };
-    $scope.cancel = function() {
-      $mdDialog.cancel();
-    };
-    $scope.answer = function(answer) {
-      $mdDialog.hide(answer);
-    };
-  }
 
         });
 })();

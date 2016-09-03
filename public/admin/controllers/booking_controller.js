@@ -3,16 +3,46 @@
 
     angular
         .module('app')
-        .controller('booking_controller', function booking_controller($scope,$http,$compile,uiCalendarConfig) {
+        .controller('booking_controller', function booking_controller($scope,$q,$log,$http,$compile,uiCalendarConfig,$mdDialog) {
     var date = new Date();
     var d = date.getDate();
     var m = date.getMonth();
     var y = date.getFullYear();
     
-    getBookings();
 
-    $scope.newEvent={};
-    $scope.events=[];
+
+    getBookings();
+    $scope.storedevents = [];
+
+    function getBookings(){ 
+              console.log('inside, get booking function')
+      $http.get('/api/booking/').then(function(response){
+
+        angular.forEach(response.data, function(x){
+        console.log(JSON.stringify(x));
+
+
+        var object = {
+            title: x.bookingSubmitter,
+            start: new Date(Date.parse(x.StartDate)),
+            end: new Date(Date.parse(x.EndDate)),
+            time: x.Time,
+            approved: x.Approved,
+            approvedBy: x.ApprovedBy,
+            email: x.Email,
+            className: ['openSesame'],
+            submittedDate:x.submittedDate
+          }
+
+         $scope.storedevents.push(object);
+          })
+
+
+        })
+
+      
+
+    }
 
     /* event source that pulls from google.com */
     $scope.eventSource = {
@@ -42,7 +72,7 @@
       var e = new Date(end).getTime() / 1000;
       var m = new Date(start).getMonth();
       var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-      callback(events);
+     
     };
 
 
@@ -56,6 +86,8 @@
       });
     };
     
+
+
     
      /* Render Tooltip */
     $scope.eventRender = function( event, element, view ) { 
@@ -81,15 +113,25 @@
       }
     };
 
+    $scope.events = [
+      {title: 'All Day Event',start: new Date(y, m, 1)},
+      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
+      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
+      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
+      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
+      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
+    ];
+
     $scope.changeLang = function() {     
         $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
         $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   
     };
+
     /* event sources array*/
 
 
-    $scope.sources = $scope.events;
+
 
 
     $scope.newBooking= function(event){
@@ -100,8 +142,8 @@
         var newEvent = {
 
             title: event.bookingSubmitter,
-            start: event.StartDate,
-            end: event.EndDate,
+            start: new Date(event.StartDate.replace(/-/g,"/")),
+            end: new Date(event.EndDate.replace(/-/g,"/")),
             time: event.Time,
             approved: false,
             approvedBy: 'none',
@@ -120,30 +162,11 @@
 
     }
 
+    $scope.eventSources =[$scope.events,$scope.storedevents];
 
-    function getBookings(){
-
-      $http.get('/api/booking', function(data){
-        for(x in data){
-          $scope.events.push(
-          {
-            title: x.bookingSubmitter,
-            start: x.StartDate,
-            end: x.EndDate,
-            time: x.Time,
-            approved: x.Approved,
-            approvedBy: x.ApprovedBy,
-            email: x.Email,
-            className: ['openSesame'],
-            submittedDate:x.submittedDate
-          }
-            );
-          }
-        }
-
-      )
-
-    }
+    console.log(JSON.stringify($scope.storedevents));
   }
+
+
 /* EOF */);
 })();

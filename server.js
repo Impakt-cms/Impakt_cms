@@ -50,7 +50,6 @@ Booking.find({bookingSubmitter:'sysadmin'}, function(err,booking,next){
       Time: '16:00',
       Approved:false,
       ApprovedBy: ''
-
     })
     newbooking.save(function(err,booking){
       if(err){

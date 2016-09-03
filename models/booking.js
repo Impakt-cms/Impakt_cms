@@ -10,7 +10,7 @@ var bookingSchema = new Schema({
   EndDate: Date,
   Time: String,
   Approved:{type:Boolean, default:false},
-  ApprovedBy: Schema.Types.ObjectId
+  ApprovedBy: String
 });
 
 // the schema is useless so far

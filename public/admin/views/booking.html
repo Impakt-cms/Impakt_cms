@@ -1,6 +1,6 @@
 <h1 class="text-center">Booking Manager</h1>
 <button class="btn btn-primary" data-toggle="modal" data-target="#modal-1">New Booking</button>
-<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="events"></div>
+<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources"></div>
 <!-- 		psudeocode:
 google calendar-like view of approved bookings. will be customer facing in the future -->
 </booking-calendar>
@@ -21,7 +21,7 @@ styled maybe as green? -->
 <booking-calendar>
 <div>This is the Booking Calendar.</div>
 </booking-calendar>
-<div class="modal fade" id="modal-1">
+<div class="modal fade" id="modal-1" style="z-index=2;">
 	<div class="modal-dialog" role="document">
 		<form class="modal-content" ng-submit="newBooking(event)">
 			<div>

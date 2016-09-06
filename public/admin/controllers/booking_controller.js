@@ -11,8 +11,6 @@
     
 
 
-    getBookings();
-    $scope.storedevents = [];
 
     function getBookings(){ 
               console.log('inside, get booking function')
@@ -40,7 +38,6 @@
 
         })
 
-      
 
     }
 

@@ -1,0 +1,32 @@
+
+
+<md-dialog aria-label="Mango (Fruit)">
+  <form ng-cloak>
+    <md-toolbar>
+      <h1>{{title}}</h1>
+    </md-toolbar>
+    <md-content layout-gt-sm="row" layout-padding>
+    <div>
+      <md-input-container>
+        <label>Title</label>
+        <input ng-model="title">
+      </md-input-container>
+      <md-input-container>
+        <label>Category</label>
+        <input ng-model="category" type="string">
+      </md-input-container>
+    </div>
+  </md-content>
+    <md-card-content style="text-align:center;">
+    <img ng-src="{{src}}" class="md-card-image" style="height:70%px;width:70%;margin:0 auto;" alt="Washed Out">
+    </md-card-content>
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button ng-click="update(id)">
+       Update
+      </md-button>
+      <md-button class="md-icon-button" ng-click="cancel()">X</md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>
+

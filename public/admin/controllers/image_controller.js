@@ -55,7 +55,7 @@
       		clickOutsideToClose:true,
       		fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     })
-
+    getImages();
   };
 
  
@@ -124,8 +124,13 @@
 
 			function getImages(){
 				getPromiseImages().then(function(data){
-					$scope.images = data;
+					$scope.$applyAsync(function(){
+						$scope.images = data;
 					getCategories();
+						
+						
+					});
+					
 				});
 
 			}

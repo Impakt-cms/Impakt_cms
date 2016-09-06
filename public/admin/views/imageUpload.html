@@ -39,7 +39,7 @@
 	
 	<div class="col-md-3 col-md-offset-1">
 		<h3 class="text-center">Before</h3>
-		<md-card class="imgPreview md-whiteframe-z2"></md-card>
+		<md-card class="imgPreview md-whiteframe-z2"><img class="thumb"  style="height:inherit;" ngf-thumbnail="f" alt=""></md-card>
 	</div>
 	
 	<div class="col-md-3 col-md-offset-1">
@@ -53,7 +53,8 @@
 
 <md-grid-list md-row-height="200px" md-gutter="20px" md-cols="12">
 	<md-grid-tile md-rowspan="1" md-colspan="2" ng-repeat="f in files">
-		<div class="image-display"><img class="thumb"  style="height:inherit;" ngf-thumbnail="f" alt="">
+		<div class="image-display">
+			
 			<span class="progress" ng-show="f.progress >= 0">
 				<div class="progress-bar" role="progressbar" arial-valuenow="{{f.progress}}"  
 					ng-bind="f.progress + '%'">

@@ -58,7 +58,7 @@ router.route('/images')
 			for(var file in req.files){
 			cloudinary.uploader.upload(filepath, function(result) { 
 			console.log(result) 
-				image.file_path = result.url;
+				image.file_path = result.secure_url;
 				console.log(JSON.stringify(image));
 				image.save(function(err){
 					if(err){

@@ -20,27 +20,23 @@ router.route('/')
 	.post(function(req,res){
 		var date_time = new Date();
 		var booking = new Booking();
-		console.log(req.headers['content-type'])
-		console.log(JSON.stringify(req.body));
-
-		booking.bookingSubmitter= req.body.title;
-		booking.Email = req.body.email;
-		booking.submittedDate = req.body.submittedDate;
-		booking.StartDate = req.body.start;
-		booking.EndDate = req.body.end;	
-		booking.Time = req.body.time;
-		booking.Approved = req.body.approved;
-		booking.ApprovedBy = req.body.approvedBy;
+	
+		booking.bookingSubmitter = req.body.bookingSubmitter;
+		booking.Email = req.body.Email;
+		booking.submittedDate = date_time;
+		booking.StartDate = req.body.StartDate;
+		booking.EndDate = req.body.EndDate;
+		booking.Time = req.body.Time;
+		booking.Approved = req.body.Approved;
+		booking.ApprovedBy = req.user._id;
 		
-
-
+		
 		booking.save(function(err){
 			if(err){
-				console.log(JSON.stringify(err));
 				res.json(err);
 			}
 			
-			console.log("success!!!");
+			res.json({message:'Booking has been received'});
 			
 		})
 		
@@ -52,11 +48,10 @@ router.route('/:booking_id')
 	.get(function(req,res){
 		Booking.findById(req.params.booking_id, function(err, booking){
 			if(err){
-				console.log("error");
 				res.send(err);
 			}
 
-			console.log("Displaying bookings");
+			console.log("Displaying " + booking.bookingname);
 			
 			res.json(booking);
 		});
@@ -70,6 +65,13 @@ router.route('/:booking_id')
 				console.log(err);
 				res.send(err);
 			}
+
+			booking.bookingSubmitter = req.body.bookingSubmitter;
+			booking.Email = req.body.Email;
+			booking.submittedDate = req.body.submittedDate;
+			booking.StartDate = req.body.StartDate;
+			booking.EndDate = req.body.EndDate;
+			booking.Time = req.body.Time;
 			booking.Approved = req.body.Approved;
 			booking.ApprovedBy = req.user._id;
 			

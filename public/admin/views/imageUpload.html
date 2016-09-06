@@ -72,7 +72,7 @@
           <md-tab-body>
           	<md-grid-list md-row-height="200px" md-gutter="20px" md-cols="12">
 			<md-grid-tile md-rowspan="1" md-colspan="2" ng-repeat="img in images | where:{category: img.category}">
-			<img class="thumb" style="height:inherit;width:100%;"   src="{{img.name}}" data="{{img.name}}" ng-click="showAdvanced(img.name,img._id,img.meta.Title,img.category)"> 
+			<img class="thumb" style="height:inherit;width:100%;"   src="{{img.file_path}}" data="{{img.file_path}}" ng-click="showAdvanced(img.file_path,img._id,img.meta.Title,img.category)"> 
 			</md-grid-tile>
 		</md-grid-list>
 

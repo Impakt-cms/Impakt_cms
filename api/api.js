@@ -7,7 +7,7 @@ var dir = './assets/';
 var multiparty = require('connect-multiparty');
 var multipartymiddleware = multiparty();
 var auth = require('../models/user');
-
+var cloudinary = require('cloudinary');
 
 // test route to make sure everything is working (accessed at GET http://localhost:8080/api)
 router.get('/', function(req, res) {
@@ -50,13 +50,16 @@ router.route('/images')
 			image.name = date_string + '.jpg';
 			image.created_at = date_time; 
 			image.category = req.body.category;
-			image.file_path = dir + image.name;
+			
 			
 			/*if(!fs.existsSync(dir+image.category)){
 				fs.mkdirSync(dir+image.category)
 			}*/
-
 			for(var file in req.files){
+			cloudinary.uploader.upload(filepath, function(result) { 
+			console.log(result) 
+				image.file_path = result.url;
+				console.log(JSON.stringify(image));
 				image.save(function(err){
 					if(err){
 						res.send(err);
@@ -64,20 +67,12 @@ router.route('/images')
 					
 					res.json({message:'Image has been created!'});
 
-					fs.readFile(filepath, function(err, data){
-						if(err){
-							res.json(err);
-						}	
-						
-						fs.writeFile(image.file_path,data,function(err){
-							if(err){
-								console.log(err);
-								res.json(err);
-							}	
-							console.log('The file was saved to'+dir);
-						});
-					});
+				
 				});
+			});
+
+			
+				
 			}
 		})
 		

@@ -24,6 +24,17 @@ var users = require('./api/users');
 var booking = require('./api/booking');
 var Booking = require('./models/booking');
 var app = express();
+var cloudinary = require('cloudinary');
+
+
+
+cloudinary.config({ 
+  cloud_name: 'dycpzpuhq', 
+  api_key: '434264539144288', 
+  api_secret: 'POPZl0TpwdA869ojAox4Wxmj9UU' 
+});
+
+
 
 app.use(timeout(120000));
 app.use(haltOnTimedout);

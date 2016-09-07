@@ -4,85 +4,77 @@
     angular
         .module('app')
         .controller('booking_controller', function booking_controller($scope,$q,$log,$http,$compile,uiCalendarConfig,$mdDialog) {
-    var date = new Date();
-    var d = date.getDate();
-    var m = date.getMonth();
-    var y = date.getFullYear();
+   
     
+    $scope.SelectedEvent =null;
 
-    getBookings();
+    var isFirstTime = true;
 
-    function getBookings(){ 
-        console.log('inside, get booking function')
-      $http.get('/api/booking/').then(function(response){
+    $scope.events = [];
+    $scope.eventSources = [$scope.events];
 
-        angular.forEach(response.data, function(x){
-        console.log(JSON.stringify(x));
+    $http.get('/api/booking/',{
+      cache:true, 
+      params:{}
+    }).then(function(data){
+      console.log("inside of get request");
+      $scope.events.slice(0,$scope.events.length);
 
+      angular.forEach(data.data, function(x){
+        console.log(JSON.stringify(x))
+        $scope.events.push({
 
-        var object = {
             title: x.bookingSubmitter,
-            start: new Date(Date.parse(x.StartDate)),
-            end: new Date(Date.parse(x.EndDate)),
+            description:x.bookingSubmitter,
+            start: new Date(),
+            end: new Date(),
             time: x.Time,
+            allday:false,
             approved: x.Approved,
             approvedBy: x.ApprovedBy,
             email: x.Email,
             className: ['openSesame'],
             submittedDate:x.submittedDate
+        })
+        console.log(JSON.stringify($scope.events));
+
+      })
+
+
+    })
+
+
+
+    $scope.uiCalendarConfig = {
+
+        calendar:{
+        height: 450,
+        editable: true,
+        displayEventTime:false,
+        header:{
+          left: 'title',
+          center: '',
+          right: 'today prev,next'
+        },
+        eventClick: function(event){
+
+          $scope.SelectedEvent = event;
+
+        },
+        eventAfterAllRender: function(){
+          if($scope.event.length > 0 && isFirstTime){
+            uiCalendarConfig.calendars.myCalendar.fullCalendar('gotoDate',$scope.events[0].start);
+
+
           }
 
-         $scope.events.push(object);
-          })
-        $scope.eventSources =[$scope.events];
-            console.log(JSON.stringify($scope.eventSources));
-        })
-
-
+        },
+        eventResize: $scope.alertOnResize,
+        eventRender: $scope.eventRender
+      }
     }
 
-    /* event source that pulls from google.com */
-    $scope.eventSource = {
-            url: "http://www.google.com/calendar/feeds/usa__en%40holiday.calendar.google.com/public/basic",
-            className: 'gcal-event',           // an option!
-            currentTimezone: 'America/Chicago' // an option!
-    };
-    /* event source that contains custom events on the scope */
 
-    
-    /*  Example Event, from google calendar
-
-    $scope.events = [
-      {title: 'All Day Event',start: new Date(y, m, 1)},
-      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-    ];*/
-
-
-
-    /* event source that calls a function on every view switch */
-    $scope.eventsF = function (start, end, timezone, callback) {
-      var s = new Date(start).getTime() / 1000;
-      var e = new Date(end).getTime() / 1000;
-      var m = new Date(start).getMonth();
-      var events = [{title: 'Feed Me ' + m,start: s + (50000),end: s + (100000),allDay: false, className: ['customFeed']}];
-     
-    };
-
-
-    /* add custom event*/
-    $scope.addEvent = function() {
-      $scope.events.push({
-        title: 'Open Sesame',
-        start: new Date(y, m, 28),
-        end: new Date(y, m, 29),
-        
-      });
-    };
-    
 
 
     
@@ -94,71 +86,9 @@
     };
 
     /* config object */
-    $scope.uiConfig = {
-      calendar:{
-        height: 450,
-        editable: true,
-        header:{
-          left: 'title',
-          center: '',
-          right: 'today prev,next'
-        },
-        eventClick: $scope.alertOnEventClick,
-        eventDrop: $scope.alertOnDrop,
-        eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
-      }
-    };
+   
 
-    $scope.events = [
-      {title: 'All Day Event',start: new Date(y, m, 1)},
-      {title: 'Long Event',start: new Date(y, m, d - 5),end: new Date(y, m, d - 2)},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d - 3, 16, 0),allDay: false},
-      {id: 999,title: 'Repeating Event',start: new Date(y, m, d + 4, 16, 0),allDay: false},
-      {title: 'Birthday Party',start: new Date(y, m, d + 1, 19, 0),end: new Date(y, m, d + 1, 22, 30),allDay: false},
-      {title: 'Click for Google',start: new Date(y, m, 28),end: new Date(y, m, 29),url: 'http://google.com/'}
-    ];
-
-    $scope.changeLang = function() {     
-        $scope.uiConfig.calendar.dayNames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-        $scope.uiConfig.calendar.dayNamesShort = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  
-    };
-
-    /* event sources array*/
-
-
-
-
-
-    $scope.newBooking= function(event){
-      
-      console.log(JSON.stringify(event));
-            console.log(JSON.stringify(event.Time));
-
-        var newEvent = {
-
-            title: event.bookingSubmitter,
-            start: new Date(event.StartDate),
-            end: new Date(event.EndDate),
-            time: event.Time,
-            approved: false,
-            approvedBy: 'none',
-            email: event.Email,
-            className: ['openSesame'],
-            submittedDate: date
-        }
-
-      $http.post('/api/booking', newEvent)
-        .error(function(err){
-          console.log(err);
-        })  
-        .success(function(data){
-          console.log("success: "+data);
-          getBookings();
-        })
-
-    }
+    
 
     
 

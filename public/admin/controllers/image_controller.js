@@ -25,6 +25,7 @@
 						console.log("Successfully deleted!")
 						getImages();
 					});
+					$mdDialog.hide()
 			};
 
 
@@ -36,7 +37,9 @@
             		category:$scope.category
             	}
 
-            	$http.put(url,data)
+            	$http.put(url,data).success(function(){
+            		getImages();
+            	})
             	.then(function(){
             		console.log("Succesfully updated an image");
             	})
@@ -65,7 +68,7 @@
       		clickOutsideToClose:true,
       		fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
     })
-    getImages();
+    
   };
 
  
@@ -89,15 +92,17 @@
 						url: '/api/images/',
 						data: {file: file, 'category': $scope.selCat}
 					});
+					file.upload.success(function(){
 
-					file.upload.then(function (response) {
+						getImages();
+					}).then(function (response) {
 						if (response.status > 0)
 							$scope.errorMsg = response.status + ': ' + response.data;
 					}, function (evt) {
 						file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
 					});
 				});
-				getImages();
+				
 			}	
 			
 			$scope.addCat = function(cat){

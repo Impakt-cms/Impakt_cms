@@ -10,10 +10,10 @@
     var y = date.getFullYear();
     
 
-
+    getBookings();
 
     function getBookings(){ 
-              console.log('inside, get booking function')
+        console.log('inside, get booking function')
       $http.get('/api/booking/').then(function(response){
 
         angular.forEach(response.data, function(x){
@@ -32,10 +32,10 @@
             submittedDate:x.submittedDate
           }
 
-         $scope.storedevents.push(object);
+         $scope.events.push(object);
           })
-
-
+        $scope.eventSources =[$scope.events];
+            console.log(JSON.stringify($scope.eventSources));
         })
 
 
@@ -139,8 +139,8 @@
         var newEvent = {
 
             title: event.bookingSubmitter,
-            start: new Date(event.StartDate.replace(/-/g,"/")),
-            end: new Date(event.EndDate.replace(/-/g,"/")),
+            start: new Date(event.StartDate),
+            end: new Date(event.EndDate),
             time: event.Time,
             approved: false,
             approvedBy: 'none',
@@ -155,13 +155,14 @@
         })  
         .success(function(data){
           console.log("success: "+data);
+          getBookings();
         })
 
     }
 
-    $scope.eventSources =[$scope.events,$scope.storedevents];
+    
 
-    console.log(JSON.stringify($scope.storedevents));
+
   }
 
 

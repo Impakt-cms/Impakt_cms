@@ -9,15 +9,24 @@
 			$scope.customFullscreen = false;
 
 
-		$scope.showAdvanced = function(data,id,title,cat) {
-			console.log(data);
+		$scope.showAdvanced = function(img) {
+			console.log(img);
     		$mdDialog.show({
-     		controller: ['$scope', 'data','id','title','cat','$mdDialog', function($scope, data,id,title,cat,$mdDialog) {
-     			console.log(title);
-            $scope.src = data;
-            $scope.id=id;
-            $scope.title=title;
-            $scope.category=cat;
+     		controller: ['$scope', 'img','$mdDialog', function($scope,img,$mdDialog) {
+     		
+            $scope.src = img.file_path;
+            $scope.id= img._id;
+            $scope.title=img.meta.Title;
+            $scope.category=img.category;
+
+            $scope.delete= function(id){
+				$http.delete('/api/images/'+id)
+					.success(function(res){
+						console.log("Successfully deleted!")
+						getImages();
+					});
+			};
+
 
             $scope.update = function(id){
             	var url ='/api/images/'+id;
@@ -37,6 +46,10 @@
 
             }
 
+
+
+
+
             $scope.cancel = function() {
       		$mdDialog.hide();
       		console.log("closed");
@@ -45,12 +58,9 @@
           }],
       		templateUrl: 'img-popup.partial.html',
       		parent: angular.element(document.body),
-      		targetEvent: data,
+      		targetEvent: img,
       		locals:{
-      			data:data,
-      			id: id,
-      			title:title,
-      			cat:cat
+      			img:img,
       		},
       		clickOutsideToClose:true,
       		fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
@@ -125,9 +135,10 @@
 			function getImages(){
 				getPromiseImages().then(function(data){
 					$scope.$applyAsync(function(){
+						console.log(JSON.stringify(data));
 						$scope.images = data;
 					getCategories();
-						
+					
 						
 					});
 					

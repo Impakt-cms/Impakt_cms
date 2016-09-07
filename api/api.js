@@ -58,6 +58,7 @@ router.route('/images')
 			for(var file in req.files){
 			cloudinary.uploader.upload(filepath, function(result) { 
 			console.log(result) 
+				image.public_id = result.public_id;
 				image.file_path = result.secure_url;
 				console.log(JSON.stringify(image));
 				image.save(function(err){
@@ -133,15 +134,9 @@ router.route('/images/:image_id')
 			if(err){
 				res.json(err);
 			}
-
-			console.log(image.file_path);
-			fs.unlink(image.file_path, function(err){
-				if(err){
-					res.json(err);
-					console.log(err);
-				}
-
-				Image.remove({_id:req.params.image_id}, function(err, image){
+			cloudinary.uploader.destroy(image.public_id, function(result){
+				console.log(result);
+			Image.remove({_id:req.params.image_id}, function(err, image){
 					if(err){
 						res.json(err);
 						console.log(err);
@@ -152,8 +147,8 @@ router.route('/images/:image_id')
 				});
 				console.log("File has been unlinked");
 			});
-			
-		});
+
+			})
 
 	});
 

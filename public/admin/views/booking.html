@@ -1,6 +1,6 @@
 <h1 class="text-center">Booking Manager</h1>
 <button class="btn btn-primary" data-toggle="modal" data-target="#modal-1">New Booking</button>
-<div ui-calendar="uiConfig.calendar" class="span8 calendar" ng-model="eventSources" calendar="myCalendar"></div>
+<div ui-calendar="uiCalendarConfig.calendar" config="uiCalendarConfig" class="span8 calendar" ng-model="eventSources" calendar="calendar"></div>
 <!-- 		psudeocode:
 google calendar-like view of approved bookings. will be customer facing in the future -->
 </booking-calendar>
@@ -10,13 +10,20 @@ google calendar-like view of approved bookings. will be customer facing in the f
 	<!-- 		psudeocode:
 	for each pending booking add them to the list styled as a noticable color, perhaps outlined -->
 </pending-booking>
-<div id="currentBooking">Current Bookings</div>
-<current-booking>
+<div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px;">
+<div id="currentBooking">Selected Event:</div>
+<h3>{{SelectedEvent.title}}</h3>
+<h3>{{SelectedEvent.approved}}</h3>
+</div>
+
+
+
+
 <div>These are the Current Bookings.</div>
 <!-- 		psudeocode:
 for each current booking list in a filterable view that can be filtered by date, email or phone number
 styled maybe as green? -->
-</current-booking>
+
 <div id="bookingCalendar">Booking Calendar</div>
 <booking-calendar>
 <div>This is the Booking Calendar.</div>

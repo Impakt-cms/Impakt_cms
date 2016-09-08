@@ -22,14 +22,19 @@
 
       angular.forEach(data.data, function(x){
         console.log(JSON.stringify(x))
+        var today = new Date();
+        var start = new Date(x.StartDate);
+        var end = new Date(x.EndDate);
+
         $scope.events.push({
 
             title: x.bookingSubmitter,
             description:x.bookingSubmitter,
-            start: new Date(),
-            end: new Date(),
+            start: new Date(start),
+            end: new Date(end),
             time: x.Time,
-            allday:false,
+            allday:true,
+            stick:true,
             approved: x.Approved,
             approvedBy: x.ApprovedBy,
             email: x.Email,
@@ -39,51 +44,47 @@
         console.log(JSON.stringify($scope.events));
 
       })
-
-
-    })
+     
+    
+  })
 
 
 
     $scope.uiCalendarConfig = {
-
-        calendar:{
+      calendar:{
         height: 450,
         editable: true,
-        displayEventTime:false,
         header:{
           left: 'title',
           center: '',
           right: 'today prev,next'
         },
         eventClick: function(event){
-
           $scope.SelectedEvent = event;
-
         },
-        eventAfterAllRender: function(){
-          if($scope.event.length > 0 && isFirstTime){
-            uiCalendarConfig.calendars.myCalendar.fullCalendar('gotoDate',$scope.events[0].start);
-
-
-          }
-
-        },
+        eventDrop: $scope.alertOnDrop,
         eventResize: $scope.alertOnResize,
-        eventRender: $scope.eventRender
+        eventRender: $scope.eventRender 
       }
-    }
+    };
+         
+   
 
-
-
-
-    
-     /* Render Tooltip */
-    $scope.eventRender = function( event, element, view ) { 
+  $scope.eventRender = function( event, element, view ) { 
         element.attr({'tooltip': event.title,
                      'tooltip-append-to-body': true});
         $compile(element)($scope);
     };
+    
+
+
+
+    $scope.alertOnEventClick = function( date, jsEvent, view){
+        $scope.alertMessage = (date.title + ' was clicked ');
+    };
+
+    
+   
 
     /* config object */
    

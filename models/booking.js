@@ -5,12 +5,14 @@ var Schema = mongoose.Schema;
 var bookingSchema = new Schema({
   bookingSubmitter: {type:String,required:true},
   Email:{type:String, required:true},
+  Phone:String,
   submittedDate: Date,
   StartDate: Date,
   EndDate: Date,
   Time: String,
   Approved:{type:Boolean, default:false},
-  ApprovedBy: Schema.Types.ObjectId
+  ApprovedBy: Schema.Types.ObjectId,
+  Description:String
 });
 
 // the schema is useless so far

@@ -5,29 +5,41 @@
 google calendar-like view of approved bookings. will be customer facing in the future -->
 </booking-calendar>
 <div id="pendingBooking">Pending Booking Requests</div>
-<pending-booking>
-	<div>These are the Pending Bookings.</div>
-	<!-- 		psudeocode:
-	for each pending booking add them to the list styled as a noticable color, perhaps outlined -->
-</pending-booking>
-<div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px;">
+
+	
+		
+		<md-content>
+      <md-list flex>
+        <md-subheader class="md-no-sticky">Pending Bookings</md-subheader>
+        <md-list-item class="md-3-line" ng-repeat="x in events | where:{approved: false}" ng-click="null">
+          <div class="md-list-item-text" layout="column">
+            <h3>{{x.title}}</h3>
+            <h4>{{x.phone}}</h4>
+            <label for="Start">{{x.start}}</label>
+            <label for="End">{{x.end}}</label>
+            <label for="Time">{{x.time}}</label>
+            <p>{{ x.description }}</p>
+          </div>
+        </md-list-item>
+		
+	</div>
+
+
+
+<!--<div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px;">
 <div id="currentBooking">Selected Event:</div>
 <h3>{{SelectedEvent.title}}</h3>
 <h3>{{SelectedEvent.approved}}</h3>
-</div>
+</div>-->
 
 
 
 
 <div>These are the Current Bookings.</div>
-<!-- 		psudeocode:
-for each current booking list in a filterable view that can be filtered by date, email or phone number
-styled maybe as green? -->
 
-<div id="bookingCalendar">Booking Calendar</div>
-<booking-calendar>
-<div>This is the Booking Calendar.</div>
-</booking-calendar>
+
+
+
 <div class="modal fade" id="modal-1" style="z-index=2;">
 	<div class="modal-dialog" role="document">
 		<form class="modal-content" ng-submit="newBooking(event)">

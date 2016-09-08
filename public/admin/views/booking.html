@@ -1,5 +1,5 @@
 <h1 class="text-center">Booking Manager</h1>
-<button class="btn btn-primary" data-toggle="modal" data-target="#modal-1">New Booking</button>
+
 <div ui-calendar="uiCalendarConfig.calendar" config="uiCalendarConfig" class="span8 calendar" ng-model="eventSources" calendar="calendar"></div>
 <!-- 		psudeocode:
 google calendar-like view of approved bookings. will be customer facing in the future -->
@@ -28,37 +28,3 @@ styled maybe as green? -->
 <booking-calendar>
 <div>This is the Booking Calendar.</div>
 </booking-calendar>
-<div class="modal fade" id="modal-1" style="z-index=2;">
-	<div class="modal-dialog" role="document">
-		<form class="modal-content" ng-submit="newBooking(event)">
-			<div>
-				<div class="form-group">
-					<label for="Name">Name</label>
-					<input class="form-control" type="name" ng-model="event.bookingSubmitter">
-				</div>
-				<div class="form-group">
-					<label for="Email">Email</label>
-					<input class="form-control" type="email" value="james@james.com" ng-model="event.Email">
-				</div>
-				<div layout-gt-xs="row">
-					<div flex-gt-xs="">
-						<md-datepicker ng-model="event.StartDate" md-placeholder="Start date"></md-datepicker>
-					</div>
-				</div>
-				<div layout-gt-xs="row">
-					<div flex-gt-xs="">
-						<md-datepicker ng-model="event.EndDate" md-placeholder="End date"></md-datepicker>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="Time">Time</label>
-					<input class="form-control" type="text" value="13:45:00" ng-model="event.Time">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" value="Submit" class="btn btn-primary">Save changes</button>
-			</div>
-			</form><!-- /.modal-content -->
-			</div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->

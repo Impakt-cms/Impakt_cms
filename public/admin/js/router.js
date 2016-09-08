@@ -3,14 +3,19 @@
 
     angular
         .module('app')
-        .config(function ($stateProvider, $urlRouterProvider) {
+        .config(function ($stateProvider, $urlRouterProvider,$locationProvider) {
           
-            $urlRouterProvider.otherwise("/home");
+            $urlRouterProvider.otherwise("/admin");
+            $locationProvider.html5Mode({
+            	enabled: true,
+				 requireBase: false
+            	
+            	});
             
             $stateProvider
               .state('login', {
-                  url: "/",
-                  templateUrl: "login.html",
+                  url: "/admin",
+                  templateUrl: "/admin/login.html",
                   controller: "login_controller",
 				  resolve: {
 					  load: function($q, $cookieStore){
@@ -25,8 +30,8 @@
 				  }
               })
 			  .state('home', {
-				  url: "/home",
-				  templateUrl: "home.html",
+				  url: "/admin/home",
+				  templateUrl: "/admin/home.html",
 				  controller: "home_controller",
 				  resolve: {
 					  load: function($q, $cookieStore){
@@ -41,7 +46,7 @@
 				  }				
 			  })
 			  .state('booking', {
-				  url: "/booking",
+				  url: "/admin/booking",
 				  templateUrl: "booking.html",
 				  controller: "booking_controller",
 				  resolve: {
@@ -57,12 +62,12 @@
 				  }
 			  })
 			  .state('register', {
-				  url: "/register",
+				  url: "/admin/register",
 				  templateUrl: "register.html",
 				  controller: "register_controller"
 			  })
 			  .state('image', {
-			  	url:"/imagemanager",
+			  	url:"/admin/imagemanager",
 			  	templateUrl: "imageUpload.html",
 			  	controller: "image_controller",
 			  	resolve: {
@@ -78,7 +83,7 @@
 				  }
 			  })
 			  .state('user', {
-			  	url:"/usermanager",
+			  	url:"/admin/usermanager",
 			  	templateUrl: "users.html",
 			  	controller: "user_controller",
 			  	resolve: {

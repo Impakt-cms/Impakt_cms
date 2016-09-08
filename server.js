@@ -157,7 +157,7 @@ var port = process.env.PORT || 8080;        // set our port
 
 // REGISTER OUR ROUTES -------------------------------
 // all of our routes will be prefixed with /api
-app.use(express.static(path.join(__dirname, '/public/admin/views')));
+app.use('/admin',express.static(path.join(__dirname, '/public/admin/views')));
 //Using express.static to fetch different file types.
 app.use('/api', api_routes);
 app.use(express.static(__dirname+'/assets'));
@@ -169,6 +169,11 @@ app.use('/services', express.static(__dirname + '/public/admin/services'));
 
 
 //Fetching 404 as default if others fall through.
+
+app.all('/admin', function(req, res, next) {
+    // Just send the index.html for other files to support HTML5Mode
+    res.sendFile('index.html', { root: __dirname });
+});
 app.all('/*', function(req, res, next) {
 	res.sendFile('./public/admin/views/404.html', { root: __dirname });
 });

@@ -58,24 +58,38 @@ router.route('/:booking_id')
 	})
 	//Update Booking
 	.put(function(req,res){
-		console.log("Put has been received");
+		
 		Booking.findById(req.params.booking_id, function(err, booking){
-
 			if (err){
 				console.log(err);
 				res.send(err);
 			}
-
+			console.log(JSON.stringify(req.body));
 			booking.bookingSubmitter = req.body.bookingSubmitter;
+			booking.Phone = req.body.Phone;
 			booking.Email = req.body.Email;
-			booking.submittedDate = req.body.submittedDate;
 			booking.StartDate = req.body.StartDate;
 			booking.EndDate = req.body.EndDate;
 			booking.Time = req.body.Time;
+			booking.Description=req.body.Description;
 			booking.Approved = req.body.Approved;
-			booking.ApprovedBy = req.user._id;
 			
-			booking.save();
+			if(req.body.approved="true"){
+			booking.ApprovedBy = req.user._id;
+			}
+			else{
+				booking.ApprovedBy= "";
+			}
+			
+			booking.save(function(err){
+				
+				if(err){
+					console.error(err);
+				}
+				
+				res.json({message:'This Booking has been updated!'});
+				
+			});
 		});
 	})
 	//Delete Booking

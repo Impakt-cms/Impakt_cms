@@ -54,7 +54,7 @@ router.route('/images')
 			
 			/*if(!fs.existsSync(dir+image.category)){
 				fs.mkdirSync(dir+image.category)
-			}*/
+			}*/ng
 			for(var file in req.files){
 			cloudinary.uploader.upload(filepath, function(result) { 
 			console.log(result) 

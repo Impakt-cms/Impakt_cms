@@ -11,7 +11,8 @@
 		'ngMaterial',
 		'ui.calendar', 
 		'angular.filter',
-		'ui.bootstrap'
+		'ui.bootstrap',
+		'ngMaterialDatePicker'
 	])
 	//Get scope variable based of logged in status.
 	.run(function($rootScope, $cookieStore){

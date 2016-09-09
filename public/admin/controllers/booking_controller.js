@@ -15,6 +15,7 @@
     $scope.eventSources = [$scope.events];
 
       function getBookings(){
+        $scope.events = [];
         $http.get('/api/booking/',{
       cache:true, 
       params:{}
@@ -23,11 +24,11 @@
       $scope.events.slice(0,$scope.events.length);
 
       angular.forEach(data.data, function(x){
-        console.log(JSON.stringify(x))
+        
         var today = new Date();
         var start = new Date(x.StartDate);
         var end = new Date(x.EndDate);
-
+    
         $scope.events.push({
             title: x.bookingSubmitter,
             description:x.Description,
@@ -70,15 +71,18 @@
       }
     };
          
+         
+         
+         
    	$scope.showAdvanced = function(e) {
-			console.log(e);
+		
 			
 			
 			
 			
     		$mdDialog.show({
      		controller: ['$scope', 'e','$mdDialog', function($scope,e,$mdDialog) {
-     		    console.log(e);
+     		    
             $scope.Name = e.title;
             $scope.Description = e.description;
             $scope.Start= new Date(e.start);
@@ -101,7 +105,7 @@
 
            $scope.update = function(id){
             	var url ='/api/booking/'+id;
-              console.log(id);
+              
             	var data = {
             		bookingSubmitter:$scope.Name,
             		Email:$scope.Email,
@@ -159,7 +163,27 @@
     };
 
     
-   
+   $scope.update = function(id){
+            	var url ='/api/booking/'+id;
+              console.log($scope.title);
+              console.log($scope.email);
+            	var data = {
+            		bookingSubmitter:$scope.title,
+            		Email:$scope.email,
+            		Approved:$scope.approved,
+            		Phone:$scope.phone,
+            		StartDate:$scope.start,
+            		EndDate:$scope.end,
+            		Description:$scope.description
+            	}
+
+            	$http.put(url,data).success(function(){
+            		getBookings();
+            	})
+            	.then(function(){
+            		console.log("Succesfully updated a Booking");
+            	})
+   }
 
     /* config object */
    

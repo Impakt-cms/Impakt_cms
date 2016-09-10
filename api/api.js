@@ -54,7 +54,7 @@ router.route('/images')
 			
 			/*if(!fs.existsSync(dir+image.category)){
 				fs.mkdirSync(dir+image.category)
-			}*/ng
+			}*/
 			for(var file in req.files){
 			cloudinary.uploader.upload(filepath, function(result) { 
 			console.log(result) 
@@ -116,7 +116,7 @@ router.route('/images/:image_id')
 
 			image.updated_at = new Date(); 
 			image.category = req.body.category;
-			
+			image.sort = req.body.sort;
 			image.save(function(err){
 				if(err){
 					res.json(err);

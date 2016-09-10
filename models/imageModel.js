@@ -6,8 +6,8 @@ var imageSchema = new Schema({
   name: {type:String,required:true},
   file_path:{type:String, required:true},
   public_id:{type:String, required:true},
-  category: {type:String, default: "General"},
-
+  category: {type:String, default: "Splash"},
+  sort:{type:Number, default:1},
   author: String,
   meta: {
     Title: {type:String, default:"NewImage"}

@@ -1,70 +1,52 @@
 <h1 class="text-center">Booking Manager</h1>
-
-
-
-
 <div ui-calendar="uiCalendarConfig.calendar" config="uiCalendarConfig" class="span8 calendar" ng-model="eventSources" calendar="calendar"></div>
 <!-- 		psudeocode:
 google calendar-like view of approved bookings. will be customer facing in the future -->
 </booking-calendar>
 <div id="pendingBooking">Pending Booking Requests</div>
-
-
-
 <md-content>
-	<md-list flex>
-		<md-subheader class="md-no-sticky">Pending Bookings</md-subheader>
-		<md-list-item class="md-3-line" ng-repeat="xx in events | where:{approved: false}">
-			<md-card layout="row">
-				<md-input-container>
-					<label>Customer Name</label>
-					<input ng-model="newtitle" placeholder="{{xx.title}}">
-				</md-input-container>
-				<md-input-container>
-					<label>Customer Phone</label>
-					<input ng-model="newphone" placeholder="{{xx.phone}}">
-				</md-input-container>
-				<md-input-container>
-					<label>Email</label>
-					<input ng-model="newemail" type="string" placeholder="{{xx.email}}">
-				</md-input-container>
-				<div class="range layout-row flex-gt-md-30">
-					<md-input-container class="md-input-has-placeholder">
-						<label>Start Date/Time</label>
-						<input id="input_0" class=" md-input" mdc-datetime-picker="" date="true" time="true" placeholder="{{xx.start}}" max-date="dateTimeEnd" ng-model="newstart" type="text">
-					</md-input-container>
-					<md-input-container class="md-input-has-placeholder">
-						<label>End Date/Time</label>
-						<input id="input_1" class=" md-input" mdc-datetime-picker="" ng-model="newend" date="true" time="true" placeholder="{{xx.end}}" min-date="dateTimeStart"="dateTimeEnd" type="text">
-					</md-input-container>
-				</div>
-				<div>
-					<md-input-container style="margin-right: 10px;">
-						<label>Approved</label>
-						<md-select ng-model="approved">
-							<md-option ng-repeat="y in bool" value="{{y}}">{{y}}</md-option>
-						</md-select>
-					</md-input-container>
-					<md-button ng-click="update(xx.id)">
-       Update
-      </md-button>
-				</div>
-			</div>
-		</md-card>
-
-		</div>
-
-
-
-
-
-		<!--<div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px;">
+<md-list flex>
+<md-subheader class="md-no-sticky">Pending Bookings</md-subheader>
+<md-list-item class="md-3-line" ng-repeat="xx in events | where:{approved: false}">
+<md-card layout="row">
+<md-input-container>
+<label>Customer Name</label>
+<input ng-model="newtitle" placeholder="{{xx.title}}">
+</md-input-container>
+<md-input-container>
+<label>Customer Phone</label>
+<input ng-model="newphone" placeholder="{{xx.phone}}">
+</md-input-container>
+<md-input-container>
+<label>Email</label>
+<input ng-model="newemail" type="string" placeholder="{{xx.email}}">
+</md-input-container>
+<div class="range layout-row flex-gt-md-30">
+	<md-input-container class="md-input-has-placeholder">
+	<label>Start Date/Time</label>
+	<input id="input_0" class=" md-input" mdc-datetime-picker="" date="true" time="true" placeholder="{{xx.start}}" max-date="dateTimeEnd" ng-model="newstart" type="text">
+	</md-input-container>
+	<md-input-container class="md-input-has-placeholder">
+	<label>End Date/Time</label>
+	<input id="input_1" class=" md-input" mdc-datetime-picker="" ng-model="newend" date="true" time="true" placeholder="{{xx.end}}" min-date="dateTimeStart"="dateTimeEnd" type="text">
+	</md-input-container>
+</div>
+<div>
+	<md-input-container style="margin-right: 10px;">
+	<label>Approved</label>
+	<md-select ng-model="approved">
+	<md-option ng-repeat="y in bool" value="{{y}}">{{y}}</md-option>
+	</md-select>
+	</md-input-container>
+	<md-button ng-click="update(xx.id)">
+	Update
+	</md-button>
+</div>
+</div>
+</md-card>
+</div>
+<!--<div ng-show="SelectedEvent" class="alert alert-success" style="margin-top:50px;">
 <div id="currentBooking">Selected Event:</div>
 <h3>{{SelectedEvent.title}}</h3>
 <h3>{{SelectedEvent.approved}}</h3>
 </div>-->
-
-
-
-
-

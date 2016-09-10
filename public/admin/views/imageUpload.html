@@ -28,12 +28,7 @@
 			<select ng-model="selCat" ng-options="cat as cat for cat in categories"></select>
 		</div>
 		<br>
-		<form ng-submit="addCat(newCat)" class="input-group">
-			<input type="text" class="form-control" placeholder="Add a new category..." ng-model="newCat" required>
-			<span class="input-group-btn">
-				<button class="btn btn-primary" type="submit">Add Category</button>
-			</span>
-		</form>
+		
 		
 	</div>
 	
@@ -72,7 +67,7 @@
         <div class="demo-tab tab{{$index%4}}" style="padding: 25px; text-align: center;">
           <md-tab-body>
           	<md-grid-list md-row-height="200px" md-gutter="20px" md-cols="12">
-			<md-grid-tile md-rowspan="1" md-colspan="2" ng-repeat="img in images | where:{category: img.category}">
+			<md-grid-tile md-rowspan="1" md-colspan="2" ng-repeat="img in images | where:{category: img.category} |  orderBy:'sort'">
 			<img class="thumb" style="height:inherit;width:100%;"   src="{{img.file_path}}" data="{{img.file_path}}" ng-click="showAdvanced(img)"> 
 			</md-grid-tile>
 		</md-grid-list>

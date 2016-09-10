@@ -18,6 +18,7 @@
             $scope.id= img._id;
             $scope.title=img.meta.Title;
             $scope.category=img.category;
+            $scope.sort = img.sort;
 
             $scope.delete= function(id){
 				$http.delete('/api/images/'+id)
@@ -34,7 +35,8 @@
 
             	var data = {
             		title:$scope.title,
-            		category:$scope.category
+            		category:$scope.category,
+            		sort:$scope.sort
             	}
 
             	$http.put(url,data).success(function(){
@@ -114,7 +116,7 @@
 			function getCategories(){
 				
 				$scope.categories = [];
-				$scope.categories[0] = $scope.selCat = "General";
+				$scope.categories[0] = $scope.selCat = "Splash";
 				angular.forEach($scope.images, function (image){
 					if (image.category && $scope.categories.indexOf(image.category) < 0){
 						$scope.categories.push(image.category);

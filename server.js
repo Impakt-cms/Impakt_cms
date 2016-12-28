@@ -48,7 +48,7 @@ process.on('uncaughtException', function (err) {
 
 Booking.find({bookingSubmitter:'sysadmin'}, function(err,booking,next){
   if(err){
-    console.log(err);
+    console.log(err);co
   }
   var date = new Date();
   if(!booking){
